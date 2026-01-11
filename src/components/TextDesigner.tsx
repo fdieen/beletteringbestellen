@@ -268,16 +268,17 @@ export function TextDesigner() {
               <h3 className="text-sm font-medium text-muted-foreground mb-4">Preview</h3>
               <div className="bg-muted rounded-xl p-8 min-h-[200px] flex items-center justify-center overflow-hidden">
                 <div
-                  className="text-center break-all transition-all duration-300"
+                  className="text-center break-words max-w-full transition-all duration-200"
                   style={{
                     fontFamily: selectedFont.fontFamily,
-                    fontSize: `${Math.min(heightCm * 8, 80)}px`,
+                    fontSize: `${Math.max(Math.min(heightCm * 6, 64), 16)}px`,
                     color: selectedColor.hex,
-                    textShadow: selectedColor.id === 'white' ? '0 0 1px rgba(0,0,0,0.2)' : 'none',
-                    lineHeight: 1.2,
+                    textShadow: selectedColor.id === 'white' ? '0 1px 2px rgba(0,0,0,0.3)' : 'none',
+                    lineHeight: 1.3,
+                    wordBreak: 'break-word',
                   }}
                 >
-                  {text || 'Typ je tekst...'}
+                  {text.length > 0 ? text : 'Typ je tekst...'}
                 </div>
               </div>
               <p className="text-xs text-muted-foreground text-center mt-3">
