@@ -1,10 +1,8 @@
-import { ShoppingCart, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
-import { useCart } from '@/context/CartContext';
-import { formatPrice } from '@/lib/pricing';
+import { CartSheet } from '@/components/CartSheet';
 
 export function Header() {
-  const { totalItems, totalPrice } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -41,17 +39,7 @@ export function Header() {
 
           {/* Cart Button */}
           <div className="flex items-center gap-4">
-            <button className="relative flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium transition-all hover:opacity-90">
-              <ShoppingCart className="w-5 h-5" />
-              <span className="hidden sm:inline">
-                {totalItems > 0 ? formatPrice(totalPrice) : 'Winkelwagen'}
-              </span>
-              {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-accent text-accent-foreground w-6 h-6 rounded-full text-sm font-bold flex items-center justify-center">
-                  {totalItems}
-                </span>
-              )}
-            </button>
+            <CartSheet />
 
             {/* Mobile Menu Button */}
             <button 
