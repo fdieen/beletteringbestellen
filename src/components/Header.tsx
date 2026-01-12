@@ -15,7 +15,7 @@ export function Header() {
             <img 
               src="/assets/logo.png" 
               alt="Belettering Bestellen.nl" 
-              className="h-10 md:h-14 w-auto"
+              className="h-12 md:h-16 w-auto"
             />
           </Link>
 
