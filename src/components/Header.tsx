@@ -1,5 +1,6 @@
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { CartSheet } from '@/components/CartSheet';
 
 export function Header() {
@@ -10,7 +11,7 @@ export function Header() {
       <div className="section-container">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="flex items-center">
               <span className="text-xl md:text-2xl font-display font-bold text-primary">
                 Belettering
@@ -19,22 +20,22 @@ export function Header() {
                 Bestellen.nl
               </span>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#ontwerp" className="text-foreground/80 hover:text-primary transition-colors font-medium">
+            <a href="/#ontwerp" className="text-foreground/80 hover:text-primary transition-colors font-medium">
               Ontwerp
             </a>
-            <a href="#hoe-werkt-het" className="text-foreground/80 hover:text-primary transition-colors font-medium">
+            <a href="/#hoe-werkt-het" className="text-foreground/80 hover:text-primary transition-colors font-medium">
               Hoe werkt het?
             </a>
-            <a href="#faq" className="text-foreground/80 hover:text-primary transition-colors font-medium">
+            <Link to="/faq" className="text-foreground/80 hover:text-primary transition-colors font-medium">
               FAQ
-            </a>
-            <a href="#contact" className="text-foreground/80 hover:text-primary transition-colors font-medium">
+            </Link>
+            <Link to="/contact" className="text-foreground/80 hover:text-primary transition-colors font-medium">
               Contact
-            </a>
+            </Link>
           </nav>
 
           {/* Cart Button */}
@@ -55,18 +56,34 @@ export function Header() {
         {mobileMenuOpen && (
           <nav className="md:hidden py-4 border-t border-border animate-fade-in">
             <div className="flex flex-col gap-4">
-              <a href="#ontwerp" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">
+              <a 
+                href="/#ontwerp" 
+                className="text-foreground/80 hover:text-primary transition-colors font-medium py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Ontwerp
               </a>
-              <a href="#hoe-werkt-het" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">
+              <a 
+                href="/#hoe-werkt-het" 
+                className="text-foreground/80 hover:text-primary transition-colors font-medium py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Hoe werkt het?
               </a>
-              <a href="#faq" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">
+              <Link 
+                to="/faq" 
+                className="text-foreground/80 hover:text-primary transition-colors font-medium py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 FAQ
-              </a>
-              <a href="#contact" className="text-foreground/80 hover:text-primary transition-colors font-medium py-2">
+              </Link>
+              <Link 
+                to="/contact" 
+                className="text-foreground/80 hover:text-primary transition-colors font-medium py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Contact
-              </a>
+              </Link>
             </div>
           </nav>
         )}

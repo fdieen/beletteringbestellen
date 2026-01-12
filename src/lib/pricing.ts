@@ -2,6 +2,7 @@
 
 export const BASE_PRICE_PER_LETTER_PER_CM = 0.22;
 export const MINIMUM_ORDER_AMOUNT = 9.95;
+export const BTW_RATE = 0.21;
 
 export type ColorCategory = 'standard' | 'colored' | 'metallic';
 
@@ -15,8 +16,10 @@ export interface ColorOption {
 
 export const COLOR_OPTIONS: ColorOption[] = [
   // Standard colors (no surcharge)
-  { id: 'white', name: 'Wit', hex: '#FFFFFF', category: 'standard', surcharge: 0 },
   { id: 'black', name: 'Zwart', hex: '#1a1a1a', category: 'standard', surcharge: 0 },
+  { id: 'white', name: 'Wit', hex: '#FFFFFF', category: 'standard', surcharge: 0 },
+  { id: 'darkgray', name: 'Donkergrijs', hex: '#4a4a4a', category: 'standard', surcharge: 0 },
+  { id: 'lightgray', name: 'Lichtgrijs', hex: '#a0a0a0', category: 'standard', surcharge: 0 },
   
   // Colored (+€0.02 per letter per cm)
   { id: 'red', name: 'Rood', hex: '#E53935', category: 'colored', surcharge: 0.02 },
@@ -24,12 +27,12 @@ export const COLOR_OPTIONS: ColorOption[] = [
   { id: 'green', name: 'Groen', hex: '#43A047', category: 'colored', surcharge: 0.02 },
   { id: 'yellow', name: 'Geel', hex: '#FDD835', category: 'colored', surcharge: 0.02 },
   { id: 'orange', name: 'Oranje', hex: '#FB8C00', category: 'colored', surcharge: 0.02 },
-  { id: 'pink', name: 'Roze', hex: '#EC407A', category: 'colored', surcharge: 0.02 },
+  { id: 'purple', name: 'Paars', hex: '#8E24AA', category: 'colored', surcharge: 0.02 },
   
   // Metallic (+€0.05 per letter per cm)
   { id: 'gold', name: 'Goud', hex: '#FFD700', category: 'metallic', surcharge: 0.05 },
   { id: 'silver', name: 'Zilver', hex: '#C0C0C0', category: 'metallic', surcharge: 0.05 },
-  { id: 'chrome', name: 'Chroom', hex: '#E8E8E8', category: 'metallic', surcharge: 0.05 },
+  { id: 'bronze', name: 'Brons', hex: '#CD7F32', category: 'metallic', surcharge: 0.05 },
 ];
 
 export interface FontOption {
@@ -40,11 +43,17 @@ export interface FontOption {
 
 export const FONT_OPTIONS: FontOption[] = [
   { id: 'arial', name: 'Arial', fontFamily: 'Arial, sans-serif' },
-  { id: 'times', name: 'Times', fontFamily: 'Times New Roman, serif' },
-  { id: 'courier', name: 'Courier', fontFamily: 'Courier New, monospace' },
+  { id: 'helvetica', name: 'Helvetica', fontFamily: 'Helvetica, Arial, sans-serif' },
+  { id: 'times', name: 'Times New Roman', fontFamily: 'Times New Roman, serif' },
   { id: 'georgia', name: 'Georgia', fontFamily: 'Georgia, serif' },
   { id: 'verdana', name: 'Verdana', fontFamily: 'Verdana, sans-serif' },
   { id: 'impact', name: 'Impact', fontFamily: 'Impact, sans-serif' },
+  { id: 'courier', name: 'Courier', fontFamily: 'Courier New, monospace' },
+  { id: 'montserrat', name: 'Montserrat', fontFamily: "'Montserrat', sans-serif" },
+  { id: 'opensans', name: 'Open Sans', fontFamily: "'Open Sans', sans-serif" },
+  { id: 'roboto', name: 'Roboto', fontFamily: "'Roboto', sans-serif" },
+  { id: 'bebas', name: 'Bebas Neue', fontFamily: "'Bebas Neue', cursive" },
+  { id: 'playfair', name: 'Playfair Display', fontFamily: "'Playfair Display', serif" },
 ];
 
 export interface VolumeDiscount {
@@ -95,6 +104,26 @@ export function calculatePrice(
 ): PriceCalculation {
   // Count actual letters (exclude spaces)
   const letterCount = text.replace(/\s/g, '').length;
+  
+  // If no letters, return zero prices
+  if (letterCount === 0) {
+    return {
+      text,
+      letterCount: 0,
+      heightCm,
+      color,
+      quantity,
+      basePrice: 0,
+      colorSurcharge: 0,
+      subtotal: 0,
+      volumeDiscount: null,
+      discountAmount: 0,
+      totalBeforeMinimum: 0,
+      total: 0,
+      pricePerUnit: 0,
+      minimumApplied: false,
+    };
+  }
   
   // Base price calculation
   const basePrice = letterCount * heightCm * BASE_PRICE_PER_LETTER_PER_CM;
