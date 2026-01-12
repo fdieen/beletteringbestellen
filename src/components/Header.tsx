@@ -11,15 +11,12 @@ export function Header() {
       <div className="section-container">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className="flex items-center">
-              <span className="text-xl md:text-2xl font-display font-bold text-primary">
-                Belettering
-              </span>
-              <span className="text-xl md:text-2xl font-display font-bold text-foreground">
-                Bestellen.nl
-              </span>
-            </div>
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/assets/logo.png" 
+              alt="Belettering Bestellen.nl" 
+              className="h-10 md:h-14 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}

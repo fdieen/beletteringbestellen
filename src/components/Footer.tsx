@@ -7,13 +7,12 @@ export function Footer() {
         <div className="flex flex-col md:flex-row md:items-start gap-8">
           {/* Logo & About */}
           <div className="max-w-md">
-            <div className="flex items-center mb-4">
-              <span className="text-xl font-display font-bold text-primary-foreground">
-                Belettering
-              </span>
-              <span className="text-xl font-display font-bold">
-                Bestellen.nl
-              </span>
+            <div className="mb-4">
+              <img 
+                src="/assets/logo.png" 
+                alt="Belettering Bestellen.nl" 
+                className="h-12 w-auto brightness-0 invert"
+              />
             </div>
             <p className="text-background/70 mb-6">
               De simpelste en goedkoopste manier om plakletters te bestellen. 
