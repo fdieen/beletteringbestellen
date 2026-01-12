@@ -4,9 +4,9 @@ export function Footer() {
   return (
     <footer id="contact" className="bg-foreground text-background">
       <div className="section-container py-12 md:py-16">
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="flex flex-col md:flex-row md:items-start gap-8">
           {/* Logo & About */}
-          <div className="md:col-span-2">
+          <div className="max-w-md">
             <div className="flex items-center mb-4">
               <span className="text-xl font-display font-bold text-primary-foreground">
                 Belettering
@@ -15,7 +15,7 @@ export function Footer() {
                 Bestellen.nl
               </span>
             </div>
-            <p className="text-background/70 mb-6 max-w-md">
+            <p className="text-background/70 mb-6">
               De simpelste en goedkoopste manier om plakletters te bestellen. 
               Ontwerp, bestel en ontvang snel in huis. Zelf plakken = goedkoper!
             </p>
@@ -33,60 +33,6 @@ export function Footer() {
                 </a>
               </div>
             </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-display font-semibold text-lg mb-4">Snelle links</h4>
-            <ul className="space-y-2 text-background/70">
-              <li>
-                <a href="#ontwerp" className="hover:text-background transition-colors">
-                  Ontwerp je tekst
-                </a>
-              </li>
-              <li>
-                <a href="#hoe-werkt-het" className="hover:text-background transition-colors">
-                  Hoe werkt het?
-                </a>
-              </li>
-              <li>
-                <a href="#faq" className="hover:text-background transition-colors">
-                  Veelgestelde vragen
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-background transition-colors">
-                  Verzending & Levering
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="font-display font-semibold text-lg mb-4">Klantenservice</h4>
-            <ul className="space-y-2 text-background/70">
-              <li>
-                <a href="#" className="hover:text-background transition-colors">
-                  Contact
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-background transition-colors">
-                  Retourneren
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-background transition-colors">
-                  Algemene voorwaarden
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-background transition-colors">
-                  Privacybeleid
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
 
