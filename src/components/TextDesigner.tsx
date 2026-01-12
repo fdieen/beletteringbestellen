@@ -10,21 +10,30 @@ import {
   FontOption 
 } from '@/lib/pricing';
 import { useCart } from '@/context/CartContext';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function TextDesigner() {
-  const [text, setText] = useState('Jouw tekst');
+  const [text, setText] = useState('');
   const [selectedFont, setSelectedFont] = useState<FontOption>(FONT_OPTIONS[0]);
-  const [selectedColor, setSelectedColor] = useState<ColorOption>(COLOR_OPTIONS[1]); // Black default
+  const [selectedColor, setSelectedColor] = useState<ColorOption>(COLOR_OPTIONS[0]); // Black default
   const [heightCm, setHeightCm] = useState(5);
   const [quantity, setQuantity] = useState(1);
   const { addItem } = useCart();
+
+  const letterCount = text.replace(/\s/g, '').length;
 
   const priceCalculation = useMemo(() => {
     return calculatePrice(text, heightCm, selectedColor, quantity);
   }, [text, heightCm, selectedColor, quantity]);
 
   const handleAddToCart = () => {
-    if (text.trim().length === 0) return;
+    if (letterCount === 0) return;
     
     addItem({
       text,
@@ -38,6 +47,11 @@ export function TextDesigner() {
     // Reset form
     setText('');
     setQuantity(1);
+  };
+
+  const handleFontChange = (fontId: string) => {
+    const font = FONT_OPTIONS.find(f => f.id === fontId);
+    if (font) setSelectedFont(font);
   };
 
   return (
@@ -69,31 +83,37 @@ export function TextDesigner() {
                 maxLength={50}
               />
               <p className="text-xs text-muted-foreground mt-1">
-                {text.replace(/\s/g, '').length} letters (spaties tellen niet mee)
+                <span className="font-medium">{letterCount}</span> letters (spaties tellen niet mee)
               </p>
             </div>
 
-            {/* Font Selection */}
+            {/* Font Selection - Dropdown */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Lettertype
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                {FONT_OPTIONS.map((font) => (
-                  <button
-                    key={font.id}
-                    onClick={() => setSelectedFont(font)}
-                    className={`p-3 rounded-lg border-2 transition-all text-left ${
-                      selectedFont.id === font.id
-                        ? 'border-primary bg-primary/5'
-                        : 'border-border hover:border-primary/50'
-                    }`}
-                    style={{ fontFamily: font.fontFamily }}
-                  >
-                    <span className="text-sm font-medium">{font.name}</span>
-                  </button>
-                ))}
-              </div>
+              <Select value={selectedFont.id} onValueChange={handleFontChange}>
+                <SelectTrigger className="w-full h-12">
+                  <SelectValue>
+                    <span style={{ fontFamily: selectedFont.fontFamily }}>
+                      {selectedFont.name}
+                    </span>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent className="bg-background border border-border">
+                  {FONT_OPTIONS.map((font) => (
+                    <SelectItem 
+                      key={font.id} 
+                      value={font.id}
+                      className="cursor-pointer"
+                    >
+                      <span style={{ fontFamily: font.fontFamily }}>
+                        {font.name}
+                      </span>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Color Selection */}
@@ -120,7 +140,7 @@ export function TextDesigner() {
                       >
                         {selectedColor.id === color.id && (
                           <Check className={`w-5 h-5 absolute inset-0 m-auto ${
-                            color.id === 'white' ? 'text-foreground' : 'text-white'
+                            color.id === 'white' || color.id === 'lightgray' ? 'text-foreground' : 'text-white'
                           }`} />
                         )}
                       </button>
@@ -145,7 +165,9 @@ export function TextDesigner() {
                         title={color.name}
                       >
                         {selectedColor.id === color.id && (
-                          <Check className="w-5 h-5 absolute inset-0 m-auto text-white" />
+                          <Check className={`w-5 h-5 absolute inset-0 m-auto ${
+                            color.id === 'yellow' ? 'text-foreground' : 'text-white'
+                          }`} />
                         )}
                       </button>
                     ))}
@@ -170,7 +192,7 @@ export function TextDesigner() {
                         }`}
                         style={{ 
                           backgroundColor: color.hex,
-                          background: color.id === 'chrome' 
+                          background: color.id === 'silver' 
                             ? 'linear-gradient(135deg, #E8E8E8 0%, #B8B8B8 50%, #E8E8E8 100%)' 
                             : color.hex
                         }}
@@ -189,7 +211,7 @@ export function TextDesigner() {
             {/* Height Selection */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
-                Hoogte: {heightCm} cm
+                Hoogte: <span className="text-primary font-semibold">{heightCm} cm</span>
               </label>
               <input
                 type="range"
@@ -267,99 +289,116 @@ export function TextDesigner() {
             <div className="card-elevated">
               <h3 className="text-sm font-medium text-muted-foreground mb-4">Preview</h3>
               <div className="bg-muted rounded-xl p-8 min-h-[200px] flex items-center justify-center overflow-hidden">
-                <div
-                  className="text-center break-words max-w-full transition-all duration-200"
-                  style={{
-                    fontFamily: selectedFont.fontFamily,
-                    fontSize: `${Math.max(Math.min(heightCm * 6, 64), 16)}px`,
-                    color: selectedColor.hex,
-                    textShadow: selectedColor.id === 'white' ? '0 1px 2px rgba(0,0,0,0.3)' : 'none',
-                    lineHeight: 1.3,
-                    wordBreak: 'break-word',
-                  }}
-                >
-                  {text.length > 0 ? text : 'Typ je tekst...'}
-                </div>
+                {letterCount > 0 ? (
+                  <div
+                    className="text-center break-words max-w-full transition-all duration-200"
+                    style={{
+                      fontFamily: selectedFont.fontFamily,
+                      fontSize: `${Math.max(Math.min(heightCm * 6, 64), 16)}px`,
+                      color: selectedColor.hex,
+                      textShadow: selectedColor.id === 'white' ? '0 1px 2px rgba(0,0,0,0.3)' : 'none',
+                      lineHeight: 1.3,
+                      wordBreak: 'break-word',
+                    }}
+                  >
+                    {text}
+                  </div>
+                ) : (
+                  <p className="text-muted-foreground italic">Typ je tekst om een preview te zien</p>
+                )}
               </div>
-              <p className="text-xs text-muted-foreground text-center mt-3">
-                {selectedFont.name} · {selectedColor.name} · {heightCm} cm hoog
-              </p>
+              {letterCount > 0 && (
+                <p className="text-xs text-muted-foreground text-center mt-3">
+                  {selectedFont.name} · {selectedColor.name} · {heightCm} cm hoog
+                </p>
+              )}
             </div>
 
             {/* Price Card */}
             <div className="card-elevated bg-gradient-to-br from-primary/5 to-accent/5 border-primary/20">
               <div className="space-y-4">
-                {/* Price breakdown */}
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">
-                      {priceCalculation.letterCount} letters × {heightCm} cm × €0,22
-                    </span>
-                    <span>{formatPrice(priceCalculation.basePrice)}</span>
-                  </div>
-                  
-                  {priceCalculation.colorSurcharge > 0 && (
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
-                        Kleurtoeslag ({selectedColor.name})
-                      </span>
-                      <span>+ {formatPrice(priceCalculation.colorSurcharge)}</span>
-                    </div>
-                  )}
-                  
-                  {quantity > 1 && (
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
-                        × {quantity} stuks
-                      </span>
-                      <span>{formatPrice(priceCalculation.subtotal)}</span>
-                    </div>
-                  )}
-                  
-                  {priceCalculation.discountAmount > 0 && (
-                    <div className="flex justify-between text-success">
-                      <span>
-                        Staffelkorting ({priceCalculation.volumeDiscount?.label})
-                      </span>
-                      <span>- {formatPrice(priceCalculation.discountAmount)}</span>
-                    </div>
-                  )}
-                  
-                  {priceCalculation.minimumApplied && (
-                    <div className="flex justify-between text-muted-foreground">
-                      <span className="flex items-center gap-1">
-                        <Info className="w-3 h-3" />
-                        Minimale bestelwaarde
-                      </span>
-                      <span>{formatPrice(9.95)}</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Total */}
-                <div className="border-t border-border pt-4">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <span className="text-sm text-muted-foreground">Jouw prijs</span>
-                      <p className="text-xs text-muted-foreground">Incl. 21% BTW</p>
-                    </div>
-                    <div className="text-right">
-                      <span className="price-highlight">
-                        {formatPrice(priceCalculation.total)}
-                      </span>
+                {letterCount > 0 ? (
+                  <>
+                    {/* Price breakdown */}
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">
+                          {priceCalculation.letterCount} letters × {heightCm} cm × €0,22
+                        </span>
+                        <span>{formatPrice(priceCalculation.basePrice)}</span>
+                      </div>
+                      
+                      {priceCalculation.colorSurcharge > 0 && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">
+                            Kleurtoeslag ({selectedColor.name})
+                          </span>
+                          <span>+ {formatPrice(priceCalculation.colorSurcharge)}</span>
+                        </div>
+                      )}
+                      
                       {quantity > 1 && (
-                        <p className="text-xs text-muted-foreground">
-                          {formatPrice(priceCalculation.pricePerUnit)} per stuk
-                        </p>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">
+                            × {quantity} stuks
+                          </span>
+                          <span>{formatPrice(priceCalculation.subtotal)}</span>
+                        </div>
+                      )}
+                      
+                      {priceCalculation.discountAmount > 0 && (
+                        <div className="flex justify-between text-success">
+                          <span>
+                            Staffelkorting ({priceCalculation.volumeDiscount?.label})
+                          </span>
+                          <span>- {formatPrice(priceCalculation.discountAmount)}</span>
+                        </div>
+                      )}
+                      
+                      {priceCalculation.minimumApplied && (
+                        <div className="flex justify-between text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <Info className="w-3 h-3" />
+                            Minimale bestelwaarde
+                          </span>
+                          <span>{formatPrice(9.95)}</span>
+                        </div>
                       )}
                     </div>
+
+                    {/* Total */}
+                    <div className="border-t border-border pt-4">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <span className="text-sm text-muted-foreground">Jouw prijs</span>
+                          <p className="text-xs text-muted-foreground">Incl. 21% BTW</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="price-highlight">
+                            {formatPrice(priceCalculation.total)}
+                          </span>
+                          {quantity > 1 && (
+                            <p className="text-xs text-muted-foreground">
+                              {formatPrice(priceCalculation.pricePerUnit)} per stuk
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-center py-4">
+                    <span className="price-highlight text-muted-foreground">
+                      € 0,00
+                    </span>
+                    <p className="text-xs text-muted-foreground mt-1">Incl. 21% BTW</p>
                   </div>
-                </div>
+                )}
 
                 {/* Add to Cart Button */}
                 <button
                   onClick={handleAddToCart}
-                  disabled={text.trim().length === 0}
+                  disabled={letterCount === 0}
                   className="w-full btn-hero flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ShoppingCart className="w-5 h-5" />
