@@ -11,7 +11,7 @@ export function Footer() {
               <img 
                 src="/assets/logo.png" 
                 alt="Belettering Bestellen.nl" 
-                className="h-14 w-auto"
+                className="h-28 w-auto"
               />
             </div>
             <p className="text-background/70 mb-6">
