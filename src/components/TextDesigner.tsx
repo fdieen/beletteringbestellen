@@ -344,16 +344,6 @@ export function TextDesigner() {
                           <span>- {formatPrice(priceCalculation.discountAmount)}</span>
                         </div>
                       )}
-                      
-                      {priceCalculation.minimumApplied && (
-                        <div className="flex justify-between text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Info className="w-3 h-3" />
-                            Minimale bestelwaarde
-                          </span>
-                          <span>{formatPrice(9.95)}</span>
-                        </div>
-                      )}
                     </div>
 
                     {/* Total */}

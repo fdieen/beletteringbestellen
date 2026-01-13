@@ -1,7 +1,6 @@
 // Pricing logic for bestellen.nl
 
 export const BASE_PRICE_PER_LETTER_PER_CM = 0.22;
-export const MINIMUM_ORDER_AMOUNT = 9.95;
 export const BTW_RATE = 0.21;
 
 export type ColorCategory = 'standard' | 'colored' | 'metallic';
@@ -90,10 +89,8 @@ export interface PriceCalculation {
   subtotal: number;
   volumeDiscount: VolumeDiscount | null;
   discountAmount: number;
-  totalBeforeMinimum: number;
   total: number;
   pricePerUnit: number;
-  minimumApplied: boolean;
 }
 
 export function calculatePrice(
@@ -118,10 +115,8 @@ export function calculatePrice(
       subtotal: 0,
       volumeDiscount: null,
       discountAmount: 0,
-      totalBeforeMinimum: 0,
       total: 0,
       pricePerUnit: 0,
-      minimumApplied: false,
     };
   }
   
@@ -142,11 +137,7 @@ export function calculatePrice(
   const discountAmount = volumeDiscount ? subtotal * volumeDiscount.discount : 0;
   
   // Total after discount
-  const totalBeforeMinimum = subtotal - discountAmount;
-  
-  // Apply minimum order amount
-  const minimumApplied = totalBeforeMinimum < MINIMUM_ORDER_AMOUNT && letterCount > 0;
-  const total = minimumApplied ? MINIMUM_ORDER_AMOUNT : totalBeforeMinimum;
+  const total = subtotal - discountAmount;
   
   // Price per unit (for display)
   const pricePerUnit = quantity > 0 ? total / quantity : 0;
@@ -162,10 +153,8 @@ export function calculatePrice(
     subtotal,
     volumeDiscount,
     discountAmount,
-    totalBeforeMinimum,
     total,
     pricePerUnit,
-    minimumApplied,
   };
 }
 
