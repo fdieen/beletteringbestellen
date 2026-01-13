@@ -9,6 +9,8 @@ import Checkout from "./pages/Checkout";
 import FAQPage from "./pages/FAQPage";
 import Contact from "./pages/Contact";
 import Bedankt from "./pages/Bedankt";
+import BetalingSucces from "./pages/BetalingSucces";
+import BetalingMislukt from "./pages/BetalingMislukt";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +28,8 @@ const App = () => (
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/bedankt" element={<Bedankt />} />
+            <Route path="/betaling-succes" element={<BetalingSucces />} />
+            <Route path="/betaling-mislukt" element={<BetalingMislukt />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
