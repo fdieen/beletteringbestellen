@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { ShoppingCart, Info, Check, Sparkles } from 'lucide-react';
 import { 
   calculatePrice, 
@@ -9,7 +9,7 @@ import {
   ColorOption,
   FontOption 
 } from '@/lib/pricing';
-import { StickerPreview } from './StickerPreview';
+import { StickerPreview, StickerDimensions } from './StickerPreview';
 import { useCart } from '@/context/CartContext';
 import {
   Select,
@@ -25,7 +25,12 @@ export function TextDesigner() {
   const [selectedColor, setSelectedColor] = useState<ColorOption>(COLOR_OPTIONS[0]); // Black default
   const [heightCm, setHeightCm] = useState(5);
   const [quantity, setQuantity] = useState(1);
+  const [stickerDimensions, setStickerDimensions] = useState<StickerDimensions>({ widthCm: 0, heightCm: 0 });
   const { addItem } = useCart();
+
+  const handleDimensionsChange = useCallback((dimensions: StickerDimensions) => {
+    setStickerDimensions(dimensions);
+  }, []);
 
   const letterCount = text.replace(/\s/g, '').length;
 
@@ -296,10 +301,11 @@ export function TextDesigner() {
                 fontFamily={selectedFont.fontFamily}
                 stickerColor={selectedColor.hex}
                 heightCm={heightCm}
+                onDimensionsChange={handleDimensionsChange}
               />
               {letterCount > 0 && (
                 <p className="text-xs text-muted-foreground text-center mt-3">
-                  {selectedFont.name} · {selectedColor.name} · {heightCm} cm hoog
+                  {selectedFont.name} · {selectedColor.name} · {stickerDimensions.widthCm} × {stickerDimensions.heightCm} cm
                 </p>
               )}
             </div>
