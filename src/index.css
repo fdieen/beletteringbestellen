@@ -2,12 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap');
 
 @layer base {
   :root {
-    /* Primary Blue - derived from typical Dutch e-commerce */
-    --primary: 210 100% 40%;
+    /* Primary Blue - Modern Dutch e-commerce */
+    --primary: 217 91% 50%;
     --primary-foreground: 0 0% 100%;
     
     /* Secondary - Light blue tint */
@@ -28,28 +28,29 @@
     
     /* Base colors */
     --background: 0 0% 100%;
-    --foreground: 220 20% 15%;
+    --foreground: 215 25% 15%;
     
     --card: 0 0% 100%;
-    --card-foreground: 220 20% 15%;
+    --card-foreground: 215 25% 15%;
     
     --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 15%;
+    --popover-foreground: 215 25% 15%;
     
     --muted: 210 20% 96%;
-    --muted-foreground: 220 10% 45%;
+    --muted-foreground: 215 15% 45%;
     
     --border: 210 20% 90%;
     --input: 210 20% 90%;
-    --ring: 210 100% 40%;
+    --ring: 217 91% 50%;
     
-    --radius: 0.75rem;
+    --radius: 1rem;
     
     /* Custom shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(220 20% 15% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(220 20% 15% / 0.1), 0 2px 4px -2px hsl(220 20% 15% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(220 20% 15% / 0.1), 0 4px 6px -4px hsl(220 20% 15% / 0.1);
-    --shadow-xl: 0 20px 25px -5px hsl(220 20% 15% / 0.1), 0 8px 10px -6px hsl(220 20% 15% / 0.1);
+    --shadow-sm: 0 1px 2px 0 hsl(215 25% 15% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(215 25% 15% / 0.1), 0 2px 4px -2px hsl(215 25% 15% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(215 25% 15% / 0.1), 0 4px 6px -4px hsl(215 25% 15% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(215 25% 15% / 0.1), 0 8px 10px -6px hsl(215 25% 15% / 0.1);
+    --shadow-2xl: 0 25px 50px -12px hsl(215 25% 15% / 0.25);
     
     /* Sidebar defaults */
     --sidebar-background: 0 0% 98%;
@@ -69,7 +70,7 @@
     --card-foreground: 0 0% 98%;
     --popover: 220 20% 12%;
     --popover-foreground: 0 0% 98%;
-    --primary: 210 100% 50%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
     --secondary: 220 20% 18%;
     --secondary-foreground: 0 0% 98%;
@@ -81,7 +82,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 220 20% 20%;
     --input: 220 20% 20%;
-    --ring: 210 100% 50%;
+    --ring: 217 91% 60%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -104,50 +105,66 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold 
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-xl font-bold 
            transition-all duration-200 hover:opacity-90 hover:shadow-lg 
            active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-primary/50;
   }
   
   .btn-accent {
-    @apply bg-accent text-accent-foreground px-6 py-3 rounded-lg font-semibold 
+    @apply bg-accent text-accent-foreground px-6 py-3 rounded-xl font-bold 
            transition-all duration-200 hover:opacity-90 hover:shadow-lg 
            active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-accent/50;
   }
   
   .btn-hero {
-    @apply bg-accent text-accent-foreground px-8 py-4 rounded-xl font-bold text-lg
-           transition-all duration-300 hover:scale-105 hover:shadow-xl 
-           active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-accent/30
+    @apply bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-black text-lg
+           transition-all duration-300 hover:opacity-90 hover:shadow-xl 
+           active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-primary/30
            shadow-lg;
   }
   
   .card-elevated {
-    @apply bg-card rounded-2xl shadow-lg border border-border/50 p-6;
+    @apply bg-card rounded-3xl shadow-xl border border-border/50 p-8;
+  }
+  
+  .card-premium {
+    @apply bg-card rounded-[2rem] border border-border/60 shadow-2xl p-8 relative overflow-hidden;
   }
   
   .price-highlight {
-    @apply text-primary font-bold text-3xl;
+    @apply text-foreground font-black text-4xl tracking-tight;
   }
   
   .price-badge {
-    @apply inline-flex items-center gap-1 bg-success/10 text-success px-3 py-1 rounded-full text-sm font-medium;
+    @apply inline-flex items-center gap-1 bg-success/10 text-success px-3 py-1 rounded-lg text-xs font-bold;
   }
   
   .input-styled {
-    @apply w-full px-4 py-3 border border-input rounded-lg bg-background 
-           focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary
-           transition-all duration-200;
+    @apply w-full px-5 py-4 border-2 border-border rounded-2xl bg-background 
+           focus:outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary
+           transition-all duration-200 text-lg font-medium;
   }
   
   .section-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .label-small {
+    @apply text-xs font-black text-muted-foreground uppercase tracking-widest;
+  }
+  
+  .trust-bar {
+    @apply bg-foreground text-background py-2.5;
+  }
+  
+  .glass-effect {
+    @apply bg-background/80 backdrop-blur-md;
   }
 }
 
@@ -167,5 +184,9 @@
   
   .animate-pulse-slow {
     animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  .tracking-tight-custom {
+    letter-spacing: -0.02em;
   }
 }
