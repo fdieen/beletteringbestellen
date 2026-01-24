@@ -1,4 +1,4 @@
-import { ArrowDown, Star, ShieldCheck, Truck } from 'lucide-react';
+import { ArrowDown, Star, ShieldCheck, Truck, Car, Store, Ship, Home } from 'lucide-react';
 
 export function Hero() {
   return (
@@ -73,6 +73,43 @@ export function Hero() {
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-success rounded-full" />
                   <span>Topkwaliteit vinyl</span>
+                </div>
+              </div>
+
+              {/* Use Case Examples */}
+              <div className="pt-12">
+                <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-6">
+                  Populaire toepassingen
+                </p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="group relative bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all cursor-pointer">
+                    <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center mb-3">
+                      <Car className="w-10 h-10 text-primary/70 group-hover:text-primary group-hover:scale-110 transition-all" />
+                    </div>
+                    <p className="text-sm font-bold text-foreground">Auto's</p>
+                    <p className="text-xs text-muted-foreground">Bedrijfswagens & personenauto's</p>
+                  </div>
+                  <div className="group relative bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all cursor-pointer">
+                    <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center mb-3">
+                      <Store className="w-10 h-10 text-primary/70 group-hover:text-primary group-hover:scale-110 transition-all" />
+                    </div>
+                    <p className="text-sm font-bold text-foreground">Winkels</p>
+                    <p className="text-xs text-muted-foreground">Etalages & panden</p>
+                  </div>
+                  <div className="group relative bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all cursor-pointer">
+                    <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center mb-3">
+                      <Ship className="w-10 h-10 text-primary/70 group-hover:text-primary group-hover:scale-110 transition-all" />
+                    </div>
+                    <p className="text-sm font-bold text-foreground">Boten</p>
+                    <p className="text-xs text-muted-foreground">Namen & registraties</p>
+                  </div>
+                  <div className="group relative bg-background/80 backdrop-blur-sm border border-border/50 rounded-2xl p-4 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-all cursor-pointer">
+                    <div className="aspect-[4/3] bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl flex items-center justify-center mb-3">
+                      <Home className="w-10 h-10 text-primary/70 group-hover:text-primary group-hover:scale-110 transition-all" />
+                    </div>
+                    <p className="text-sm font-bold text-foreground">Thuis</p>
+                    <p className="text-xs text-muted-foreground">Muren & decoratie</p>
+                  </div>
                 </div>
               </div>
             </div>
