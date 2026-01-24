@@ -127,7 +127,7 @@ export function PriceComparison() {
 
           {/* Source note */}
           <p className="text-center text-xs text-muted-foreground mt-6">
-            * Prijzen vergeleken met cijfersenletters.nl (januari 2026). Alle prijzen excl. BTW.
+            * Prijzen vergeleken met traditionele letterbedrijven (januari 2026). Alle prijzen excl. BTW.
           </p>
         </div>
       </div>
