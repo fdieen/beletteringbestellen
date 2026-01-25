@@ -24,15 +24,14 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 glass-effect border-b border-border/50">
       <div className="section-container">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-32">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
-            <div className="bg-primary text-primary-foreground p-2 rounded-xl shadow-lg shadow-primary/20">
-              <span className="font-black text-xl tracking-tighter italic">BB</span>
-            </div>
-            <span className="text-xl font-black text-foreground tracking-tight hidden sm:block">
-              Belettering<span className="text-primary">Bestellen</span>
-            </span>
+          <Link to="/" className="flex items-center">
+            <img
+              src="/assets/9374cc51-15a1-4bca-8f3e-50b57c58e982-removebg-preview.png"
+              alt="Belettering Bestellen"
+              className="h-40 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}

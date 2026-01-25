@@ -9,6 +9,9 @@ export interface CartItem {
   heightCm: number;
   quantity: number;
   priceCalculation: PriceCalculation;
+  // Logo upload properties (optional)
+  logoImage?: string;
+  logoWidth?: number;
 }
 
 interface CartContextType {

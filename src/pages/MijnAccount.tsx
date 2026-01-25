@@ -195,16 +195,16 @@ export default function MijnAccount() {
 
 function OrderCard({ order }: { order: Order }) {
   const designData = order.design_data || {};
-  
+
   return (
     <div className="border-2 border-border rounded-2xl p-5 md:p-6 hover:border-primary/30 hover:shadow-lg transition-all bg-background">
       <div className="flex flex-col md:flex-row gap-5">
         {/* Preview */}
-        <div 
+        <div
           className="w-full md:w-48 h-24 rounded-xl flex items-center justify-center overflow-hidden bg-muted"
         >
-          <svg 
-            viewBox="0 0 200 50" 
+          <svg
+            viewBox="0 0 200 50"
             className="w-full h-full"
             style={{ maxHeight: '80px' }}
           >
@@ -221,7 +221,7 @@ function OrderCard({ order }: { order: Order }) {
             </text>
           </svg>
         </div>
-        
+
         {/* Details */}
         <div className="flex-1 space-y-4">
           <div className="flex flex-wrap items-center gap-3">
@@ -230,7 +230,7 @@ function OrderCard({ order }: { order: Order }) {
               {statusLabels[order.status] || order.status}
             </Badge>
           </div>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div className="flex items-center gap-2 text-muted-foreground font-medium">
               <Calendar className="w-4 h-4" />
@@ -245,7 +245,7 @@ function OrderCard({ order }: { order: Order }) {
               <span>€{Number(order.price).toFixed(2)}</span>
             </div>
           </div>
-          
+
           {designData.text && (
             <p className="text-sm text-muted-foreground">
               Tekst: <span className="font-medium">"{designData.text}"</span>

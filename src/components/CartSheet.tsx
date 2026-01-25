@@ -66,23 +66,35 @@ export function CartSheet() {
               {items.map((item) => (
                 <div key={item.id} className="bg-muted/50 rounded-2xl p-4 space-y-3 border border-border">
                   <div className="bg-background rounded-xl p-3 text-center overflow-hidden">
-                    <span
-                      className="text-xl break-words"
-                      style={{
-                        fontFamily: item.font.fontFamily,
-                        color: item.color.hex,
-                        textShadow: item.color.id === 'white' ? '0 1px 2px rgba(0,0,0,0.3)' : 'none',
-                      }}
-                    >
-                      {item.text}
-                    </span>
+                    {item.logoImage ? (
+                      <img
+                        src={item.logoImage}
+                        alt="Logo"
+                        className="max-h-16 max-w-full mx-auto object-contain"
+                      />
+                    ) : (
+                      <span
+                        className="text-xl break-words"
+                        style={{
+                          fontFamily: item.font.fontFamily,
+                          color: item.color.hex,
+                          textShadow: item.color.id === 'white' ? '0 1px 2px rgba(0,0,0,0.3)' : 'none',
+                        }}
+                      >
+                        {item.text}
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex justify-between items-start">
                     <div className="space-y-1">
                       <p className="font-bold text-foreground">{item.text}</p>
                       <p className="text-xs text-muted-foreground font-medium">
-                        {item.font.name} · {item.color.name} · {item.heightCm} cm
+                        {item.logoImage ? (
+                          <>Full color print · {item.logoWidth} × {item.heightCm} cm</>
+                        ) : (
+                          <>{item.font.name} · {item.color.name} · {item.heightCm} cm</>
+                        )}
                       </p>
                     </div>
                     <button

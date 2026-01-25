@@ -1,14 +1,29 @@
 import { useState, useMemo, useCallback } from 'react';
 import { ShoppingCart, Info, Check, Sparkles } from 'lucide-react';
-import { 
-  calculatePrice, 
-  formatPrice, 
-  COLOR_OPTIONS, 
-  FONT_OPTIONS, 
+import {
+  calculatePrice,
+  formatPrice,
+  COLOR_OPTIONS,
+  FONT_OPTIONS,
   VOLUME_DISCOUNTS,
   ColorOption,
-  FontOption 
+  FontOption,
+  FontCategory
 } from '@/lib/pricing';
+
+const FONT_CATEGORY_LABELS: Record<FontCategory, string> = {
+  zakelijk: '💼 Zakelijk',
+  klassiek: '📜 Klassiek',
+  modern: '⚡ Modern',
+  speels: '🎈 Speels',
+  handschrift: '✍️ Handschrift',
+};
+
+const fontsByCategory = FONT_OPTIONS.reduce((acc, font) => {
+  if (!acc[font.category]) acc[font.category] = [];
+  acc[font.category].push(font);
+  return acc;
+}, {} as Record<FontCategory, FontOption[]>);
 import { StickerPreview, StickerDimensions } from './StickerPreview';
 import { useCart } from '@/context/CartContext';
 import {
@@ -93,7 +108,7 @@ export function TextDesigner() {
               </p>
             </div>
 
-            {/* Font Selection - Dropdown */}
+            {/* Font Selection - Dropdown with Categories */}
             <div>
               <label className="block text-sm font-medium text-foreground mb-2">
                 Lettertype
@@ -106,17 +121,24 @@ export function TextDesigner() {
                     </span>
                   </SelectValue>
                 </SelectTrigger>
-                <SelectContent className="bg-background border border-border">
-                  {FONT_OPTIONS.map((font) => (
-                    <SelectItem 
-                      key={font.id} 
-                      value={font.id}
-                      className="cursor-pointer"
-                    >
-                      <span style={{ fontFamily: font.fontFamily }}>
-                        {font.name}
-                      </span>
-                    </SelectItem>
+                <SelectContent className="bg-background border border-border max-h-80">
+                  {(Object.keys(fontsByCategory) as FontCategory[]).map((category) => (
+                    <div key={category}>
+                      <div className="px-2 py-1.5 text-xs font-semibold text-muted-foreground bg-muted/50 sticky top-0">
+                        {FONT_CATEGORY_LABELS[category]}
+                      </div>
+                      {fontsByCategory[category].map((font) => (
+                        <SelectItem
+                          key={font.id}
+                          value={font.id}
+                          className="cursor-pointer"
+                        >
+                          <span style={{ fontFamily: font.fontFamily }}>
+                            {font.name}
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </div>
                   ))}
                 </SelectContent>
               </Select>
