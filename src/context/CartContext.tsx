@@ -22,16 +22,28 @@ interface CartContextType {
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
+  editingItem: CartItem | null;
+  startEdit: (item: CartItem) => void;
+  clearEdit: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [editingItem, setEditingItem] = useState<CartItem | null>(null);
 
   const addItem = useCallback((item: Omit<CartItem, 'id'>) => {
     const id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     setItems(prev => [...prev, { ...item, id }]);
+  }, []);
+
+  const startEdit = useCallback((item: CartItem) => {
+    setEditingItem(item);
+  }, []);
+
+  const clearEdit = useCallback(() => {
+    setEditingItem(null);
   }, []);
 
   const removeItem = useCallback((id: string) => {
@@ -60,6 +72,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       clearCart,
       totalItems,
       totalPrice,
+      editingItem,
+      startEdit,
+      clearEdit,
     }}>
       {children}
     </CartContext.Provider>

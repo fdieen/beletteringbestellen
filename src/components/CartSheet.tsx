@@ -1,4 +1,4 @@
-import { ShoppingCart, Trash2, Plus, Minus } from 'lucide-react';
+import { ShoppingCart, Trash2, Plus, Minus, Pencil } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { formatPrice } from '@/lib/pricing';
 import {
@@ -10,16 +10,37 @@ import {
 } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { CartItem } from '@/context/CartContext';
 
 export function CartSheet() {
-  const { items, totalItems, totalPrice, removeItem, updateQuantity, clearCart } = useCart();
+  const { items, totalItems, totalPrice, removeItem, updateQuantity, clearCart, startEdit } = useCart();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleCheckout = () => {
     setOpen(false);
     navigate('/checkout');
+  };
+
+  const handleEdit = (item: CartItem) => {
+    startEdit(item);
+    removeItem(item.id);
+    setOpen(false);
+
+    // Navigate to home if not already there, then scroll to designer
+    if (location.pathname !== '/') {
+      navigate('/');
+    }
+
+    // Scroll to the designer section after a short delay
+    setTimeout(() => {
+      const designerSection = document.getElementById('ontwerp');
+      if (designerSection) {
+        designerSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   const handleUpdateQuantity = (id: string, currentQuantity: number, delta: number) => {
@@ -97,12 +118,24 @@ export function CartSheet() {
                         )}
                       </p>
                     </div>
-                    <button
-                      onClick={() => removeItem(item.id)}
-                      className="p-2 text-muted-foreground hover:text-destructive transition-colors rounded-lg hover:bg-destructive/10"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+                    <div className="flex gap-1">
+                      {!item.logoImage && (
+                        <button
+                          onClick={() => handleEdit(item)}
+                          className="p-2 text-muted-foreground hover:text-primary transition-colors rounded-lg hover:bg-primary/10"
+                          title="Bewerk ontwerp"
+                        >
+                          <Pencil className="w-4 h-4" />
+                        </button>
+                      )}
+                      <button
+                        onClick={() => removeItem(item.id)}
+                        className="p-2 text-muted-foreground hover:text-destructive transition-colors rounded-lg hover:bg-destructive/10"
+                        title="Verwijder"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
 
                   <div className="flex items-center justify-between">

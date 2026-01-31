@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { ShoppingCart, Info, Check, Sparkles } from 'lucide-react';
 import {
   calculatePrice,
@@ -41,7 +41,19 @@ export function TextDesigner() {
   const [heightCm, setHeightCm] = useState(5);
   const [quantity, setQuantity] = useState(1);
   const [stickerDimensions, setStickerDimensions] = useState<StickerDimensions>({ widthCm: 0, heightCm: 0 });
-  const { addItem } = useCart();
+  const { addItem, editingItem, clearEdit } = useCart();
+
+  // Load editing item data when available
+  useEffect(() => {
+    if (editingItem) {
+      setText(editingItem.text);
+      setSelectedFont(editingItem.font);
+      setSelectedColor(editingItem.color);
+      setHeightCm(editingItem.heightCm);
+      setQuantity(editingItem.quantity);
+      clearEdit();
+    }
+  }, [editingItem, clearEdit]);
 
   const handleDimensionsChange = useCallback((dimensions: StickerDimensions) => {
     setStickerDimensions(dimensions);

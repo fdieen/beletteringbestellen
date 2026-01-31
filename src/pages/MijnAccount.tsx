@@ -13,9 +13,27 @@ import { format } from 'date-fns';
 import { nl } from 'date-fns/locale';
 
 interface DesignData {
+  order_number?: string;
   text?: string;
   font?: string;
+  font_id?: string;
   color?: string;
+  color_name?: string;
+  quantity?: number;
+  customer?: {
+    email?: string;
+    name?: string;
+    phone?: string;
+    address?: {
+      street?: string;
+      houseNumber?: string;
+      postalCode?: string;
+      city?: string;
+    };
+  };
+  shipping_cost?: number;
+  total?: number;
+  payment_method?: string;
 }
 
 interface Order {
@@ -31,6 +49,7 @@ interface Order {
 
 const statusColors: Record<string, string> = {
   pending: 'bg-yellow-100 text-yellow-800',
+  paid: 'bg-green-100 text-green-800',
   processing: 'bg-blue-100 text-blue-800',
   shipped: 'bg-purple-100 text-purple-800',
   delivered: 'bg-green-100 text-green-800',
@@ -39,6 +58,7 @@ const statusColors: Record<string, string> = {
 
 const statusLabels: Record<string, string> = {
   pending: 'In afwachting',
+  paid: 'Betaald',
   processing: 'In productie',
   shipped: 'Verzonden',
   delivered: 'Bezorgd',
@@ -65,10 +85,16 @@ export default function MijnAccount() {
   }, [user]);
 
   const fetchOrders = async () => {
+    if (!user?.id) {
+      setLoading(false);
+      return;
+    }
+
     try {
       const { data, error } = await supabase
         .from('orders')
         .select('*')
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -229,6 +255,11 @@ function OrderCard({ order }: { order: Order }) {
             <Badge className={`${statusColors[order.status] || 'bg-gray-100 text-gray-800'} font-bold text-xs px-3 py-1 rounded-lg`}>
               {statusLabels[order.status] || order.status}
             </Badge>
+            {designData.order_number && (
+              <span className="text-xs text-muted-foreground font-mono">
+                {designData.order_number}
+              </span>
+            )}
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">

@@ -1,21 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/hooks/useAuth';
 import { formatPrice } from '@/lib/pricing';
+import { supabase } from '@/integrations/supabase/client';
 import { ArrowLeft, CreditCard, Building2, Check, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 
 type PaymentMethod = 'ideal' | 'bancontact' | 'creditcard';
 
 export default function Checkout() {
   const navigate = useNavigate();
   const { items, totalPrice, clearCart } = useCart();
+  const { user } = useAuth();
+  const { toast } = useToast();
   const [step, setStep] = useState<'details' | 'payment' | 'success'>('details');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('ideal');
   const [isProcessing, setIsProcessing] = useState(false);
-  
+  const [orderNumber, setOrderNumber] = useState<string>('');
+
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
@@ -27,6 +33,13 @@ export default function Checkout() {
     city: '',
     phone: '',
   });
+
+  // Pre-fill email if user is logged in
+  useEffect(() => {
+    if (user?.email) {
+      setFormData(prev => ({ ...prev, email: user.email || '' }));
+    }
+  }, [user]);
 
   const shippingCost = totalPrice >= 50 ? 0 : 4.95;
   const grandTotal = totalPrice + shippingCost;
@@ -40,13 +53,128 @@ export default function Checkout() {
     setStep('payment');
   };
 
+  const generateOrderNumber = () => {
+    const date = new Date();
+    const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
+    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    return `BO-${dateStr}-${random}`;
+  };
+
+  const saveOrderToDatabase = async () => {
+    const newOrderNumber = generateOrderNumber();
+
+    // Save each item as a separate order (matching existing DB structure)
+    const orderPromises = items.map(async (item) => {
+      const { error } = await supabase
+        .from('orders')
+        .insert({
+          user_id: user?.id || null,
+          product_name: `Belettering ${item.text}`,
+          width_cm: item.priceCalculation?.widthCm || 0,
+          height_cm: item.heightCm,
+          price: item.priceCalculation?.total || 0,
+          design_data: {
+            order_number: newOrderNumber,
+            text: item.text,
+            font: item.font?.name,
+            font_id: item.font?.id,
+            color: item.color?.hex,
+            color_name: item.color?.name,
+            quantity: item.quantity,
+            customer: {
+              email: formData.email,
+              name: `${formData.firstName} ${formData.lastName}`,
+              phone: formData.phone,
+              address: {
+                street: formData.street,
+                houseNumber: formData.houseNumber,
+                postalCode: formData.postalCode,
+                city: formData.city,
+              }
+            },
+            shipping_cost: shippingCost,
+            total: grandTotal,
+            payment_method: paymentMethod,
+          },
+          status: 'paid',
+        });
+
+      if (error) {
+        console.error('Error creating order:', error);
+        throw error;
+      }
+    });
+
+    await Promise.all(orderPromises);
+    return { orderNumber: newOrderNumber };
+  };
+
+  const sendOrderConfirmationEmail = async (orderNumber: string) => {
+    try {
+      const { data, error } = await supabase.functions.invoke('send-order-email', {
+        body: {
+          to: formData.email,
+          orderNumber: orderNumber,
+          customerName: `${formData.firstName} ${formData.lastName}`,
+          items: items.map(item => ({
+            text: item.text,
+            font: item.font?.name || '',
+            color: item.color?.name || '',
+            height: item.heightCm,
+            quantity: item.quantity,
+            price: item.priceCalculation?.total || 0,
+          })),
+          subtotal: totalPrice,
+          shipping: shippingCost,
+          total: grandTotal,
+          address: {
+            street: formData.street,
+            houseNumber: formData.houseNumber,
+            postalCode: formData.postalCode,
+            city: formData.city,
+          },
+        },
+      });
+
+      if (error) {
+        console.error('Error sending order email:', error);
+      } else {
+        console.log('Order email sent successfully:', data);
+      }
+    } catch (err) {
+      console.error('Error sending email:', err);
+    }
+  };
+
   const handlePayment = async () => {
     setIsProcessing(true);
-    // Simulate payment processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsProcessing(false);
-    setStep('success');
-    clearCart();
+
+    try {
+      // Save order to database
+      const { orderNumber: newOrderNumber } = await saveOrderToDatabase();
+      setOrderNumber(newOrderNumber);
+
+      // Send confirmation email
+      await sendOrderConfirmationEmail(newOrderNumber);
+
+      // Clear cart and show success
+      clearCart();
+      setStep('success');
+
+      toast({
+        title: 'Bestelling geplaatst!',
+        description: `Je bestelling ${newOrderNumber} is ontvangen.`,
+      });
+    } catch (error) {
+      console.error('Payment error:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Er ging iets mis',
+        description: 'Probeer het opnieuw of neem contact met ons op.',
+      });
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   if (items.length === 0 && step !== 'success') {
@@ -72,6 +200,11 @@ export default function Checkout() {
             <Check className="w-10 h-10 text-success" />
           </div>
           <h1 className="text-3xl font-bold text-foreground mb-4">Bedankt voor je bestelling!</h1>
+          {orderNumber && (
+            <p className="text-lg font-medium text-primary mb-4">
+              Bestelnummer: {orderNumber}
+            </p>
+          )}
           <p className="text-muted-foreground mb-2">
             Je ontvangt een bevestiging per e-mail op:
           </p>
@@ -85,9 +218,16 @@ export default function Checkout() {
               {formData.postalCode} {formData.city}
             </p>
           </div>
-          <Button onClick={() => navigate('/')} className="w-full">
-            Terug naar de shop
-          </Button>
+          <div className="space-y-3">
+            {user && (
+              <Button onClick={() => navigate('/mijn-account')} variant="outline" className="w-full">
+                Bekijk mijn bestellingen
+              </Button>
+            )}
+            <Button onClick={() => navigate('/')} className="w-full">
+              Terug naar de shop
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -122,7 +262,15 @@ export default function Checkout() {
             {step === 'details' ? (
               <form onSubmit={handleSubmitDetails} className="card-elevated space-y-6">
                 <h2 className="text-xl font-bold text-foreground">Jouw gegevens</h2>
-                
+
+                {user && (
+                  <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
+                    <p className="text-sm text-primary font-medium">
+                      Je bent ingelogd als {user.email}. Je bestelling wordt gekoppeld aan je account.
+                    </p>
+                  </div>
+                )}
+
                 {/* Contact */}
                 <div className="space-y-4">
                   <h3 className="font-medium text-foreground">Contact</h3>
@@ -239,14 +387,14 @@ export default function Checkout() {
             ) : (
               <div className="card-elevated space-y-6">
                 <h2 className="text-xl font-bold text-foreground">Betaalmethode</h2>
-                
+
                 <div className="space-y-3">
                   <button
                     type="button"
                     onClick={() => setPaymentMethod('ideal')}
                     className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${
-                      paymentMethod === 'ideal' 
-                        ? 'border-primary bg-primary/5' 
+                      paymentMethod === 'ideal'
+                        ? 'border-primary bg-primary/5'
                         : 'border-border hover:border-primary/50'
                     }`}
                   >
@@ -266,8 +414,8 @@ export default function Checkout() {
                     type="button"
                     onClick={() => setPaymentMethod('bancontact')}
                     className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${
-                      paymentMethod === 'bancontact' 
-                        ? 'border-primary bg-primary/5' 
+                      paymentMethod === 'bancontact'
+                        ? 'border-primary bg-primary/5'
                         : 'border-border hover:border-primary/50'
                     }`}
                   >
@@ -287,8 +435,8 @@ export default function Checkout() {
                     type="button"
                     onClick={() => setPaymentMethod('creditcard')}
                     className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all ${
-                      paymentMethod === 'creditcard' 
-                        ? 'border-primary bg-primary/5' 
+                      paymentMethod === 'creditcard'
+                        ? 'border-primary bg-primary/5'
                         : 'border-border hover:border-primary/50'
                     }`}
                   >
@@ -306,15 +454,15 @@ export default function Checkout() {
                 </div>
 
                 <div className="flex gap-4">
-                  <Button 
-                    type="button" 
+                  <Button
+                    type="button"
                     variant="outline"
                     onClick={() => setStep('details')}
                     className="flex-1"
                   >
                     Terug
                   </Button>
-                  <Button 
+                  <Button
                     onClick={handlePayment}
                     disabled={isProcessing}
                     className="flex-1 btn-hero"
@@ -330,7 +478,7 @@ export default function Checkout() {
           <div className="lg:col-span-1">
             <div className="card-elevated sticky top-24 space-y-4">
               <h2 className="text-lg font-bold text-foreground">Overzicht</h2>
-              
+
               <div className="space-y-3">
                 {items.map((item) => (
                   <div key={item.id} className="flex gap-3">
