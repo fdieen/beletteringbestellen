@@ -1,7 +1,4 @@
-import { Play, Clock, CheckCircle } from 'lucide-react';
-
-// Vervang dit door een echte YouTube video ID (bijv. "dQw4w9WgXcQ")
-const YOUTUBE_VIDEO_ID = null; // placeholder
+import { Clock, CheckCircle } from 'lucide-react';
 
 export function InstructionVideo() {
   return (
@@ -19,32 +16,18 @@ export function InstructionVideo() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Video Player */}
           <div className="relative">
-            {YOUTUBE_VIDEO_ID ? (
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video">
-                <iframe
-                  src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}`}
-                  title="Instructievideo plakletters aanbrengen"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute inset-0 w-full h-full"
-                />
-              </div>
-            ) : (
-              /* Placeholder wanneer er nog geen video is */
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-dashed border-primary/30">
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8">
-                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                    <Play className="w-10 h-10 text-primary ml-1" />
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">
-                    Instructievideo komt binnenkort
-                  </h3>
-                  <p className="text-muted-foreground text-sm max-w-xs">
-                    We werken aan een duidelijke video die laat zien hoe je plakletters aanbrengt
-                  </p>
-                </div>
-              </div>
-            )}
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video">
+              <video
+                controls
+                playsInline
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-cover"
+                poster=""
+              >
+                <source src="/videos/instructie.mp4" type="video/mp4" />
+                Je browser ondersteunt geen video.
+              </video>
+            </div>
           </div>
 
           {/* Steps */}
