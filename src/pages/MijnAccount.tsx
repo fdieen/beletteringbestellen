@@ -53,7 +53,8 @@ const statusColors: Record<string, string> = {
   processing: 'bg-blue-100 text-blue-800',
   shipped: 'bg-purple-100 text-purple-800',
   delivered: 'bg-green-100 text-green-800',
-  cancelled: 'bg-red-100 text-red-800'
+  cancelled: 'bg-red-100 text-red-800',
+  payment_failed: 'bg-red-100 text-red-800'
 };
 
 const statusLabels: Record<string, string> = {
@@ -62,7 +63,8 @@ const statusLabels: Record<string, string> = {
   processing: 'In productie',
   shipped: 'Verzonden',
   delivered: 'Bezorgd',
-  cancelled: 'Geannuleerd'
+  cancelled: 'Geannuleerd',
+  payment_failed: 'Betaling mislukt'
 };
 
 export default function MijnAccount() {

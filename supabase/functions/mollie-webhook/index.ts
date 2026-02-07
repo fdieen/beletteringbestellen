@@ -45,11 +45,12 @@ serve(async (req) => {
     const payment = await mollieResponse.json();
     console.log("Payment status:", payment.status);
 
-    // Initialize Supabase client
+    // Initialize Supabase client with service role (admin access)
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
-    // Get order ID from metadata
+    // Get order ID and customer email from metadata
     const orderId = payment.metadata?.order_id;
+    const customerEmail = payment.metadata?.customer_email;
 
     if (!orderId) {
       console.error("No order_id in payment metadata");
@@ -75,24 +76,43 @@ serve(async (req) => {
         orderStatus = "pending";
     }
 
+    // If payment is successful and we have an email, try to find the user
+    let userId = null;
+    if (payment.status === "paid" && customerEmail) {
+      // Look up user by email
+      const { data: userData, error: userError } = await supabase.auth.admin.listUsers();
+
+      if (!userError && userData?.users) {
+        const matchingUser = userData.users.find(
+          (u) => u.email?.toLowerCase() === customerEmail.toLowerCase()
+        );
+        if (matchingUser) {
+          userId = matchingUser.id;
+          console.log("Found user for email:", customerEmail, "-> user_id:", userId);
+        }
+      }
+    }
+
+    // Build update object
+    const updateData: Record<string, unknown> = {
+      status: orderStatus,
+    };
+
+    // If we found a user, link the order to them
+    if (userId) {
+      updateData.user_id = userId;
+    }
+
     // Update order status in database
     const { error: updateError } = await supabase
       .from("orders")
-      .update({
-        status: orderStatus,
-        design_data: supabase.sql`design_data || ${JSON.stringify({
-          mollie_payment_id: paymentId,
-          mollie_status: payment.status,
-          paid_at: payment.paidAt || null,
-        })}::jsonb`,
-      })
+      .update(updateData)
       .eq("id", orderId);
 
     if (updateError) {
       console.error("Error updating order:", updateError);
-      // Don't throw - we still want to return 200 to Mollie
     } else {
-      console.log("Order updated successfully:", orderId, "->", orderStatus);
+      console.log("Order updated successfully:", orderId, "-> status:", orderStatus, userId ? `-> user: ${userId}` : "");
     }
 
     // Mollie expects a 200 response
