@@ -53,30 +53,12 @@ export interface FontOption {
 
 export const FONT_OPTIONS: FontOption[] = [
   // Zakelijk - clean, professional fonts
-  { id: 'arial', name: 'Arial', fontFamily: 'Arial, sans-serif', category: 'zakelijk' },
-  { id: 'helvetica', name: 'Helvetica', fontFamily: 'Helvetica, Arial, sans-serif', category: 'zakelijk' },
-  { id: 'roboto', name: 'Roboto', fontFamily: "'Roboto', sans-serif", category: 'zakelijk' },
-  { id: 'opensans', name: 'Open Sans', fontFamily: "'Open Sans', sans-serif", category: 'zakelijk' },
-  { id: 'lato', name: 'Lato', fontFamily: "'Lato', sans-serif", category: 'zakelijk' },
-  { id: 'poppins', name: 'Poppins', fontFamily: "'Poppins', sans-serif", category: 'zakelijk' },
   { id: 'neutralsans', name: 'Neutral Sans', fontFamily: "'Neutral Sans', sans-serif", category: 'zakelijk' },
   { id: 'neutralsansblack', name: 'Neutral Sans Black', fontFamily: "'Neutral Sans Black', sans-serif", category: 'zakelijk' },
   { id: 'neutralsansbold', name: 'Neutral Sans Bold', fontFamily: "'Neutral Sans Bold', sans-serif", category: 'zakelijk' },
   { id: 'neutralsansmedium', name: 'Neutral Sans Medium', fontFamily: "'Neutral Sans Medium', sans-serif", category: 'zakelijk' },
 
-  // Klassiek - serif, elegant fonts
-  { id: 'times', name: 'Times New Roman', fontFamily: 'Times New Roman, serif', category: 'klassiek' },
-  { id: 'georgia', name: 'Georgia', fontFamily: 'Georgia, serif', category: 'klassiek' },
-  { id: 'playfair', name: 'Playfair Display', fontFamily: "'Playfair Display', serif", category: 'klassiek' },
-  { id: 'merriweather', name: 'Merriweather', fontFamily: "'Merriweather', serif", category: 'klassiek' },
-
   // Modern - bold, impactful fonts
-  { id: 'montserrat', name: 'Montserrat', fontFamily: "'Montserrat', sans-serif", category: 'modern' },
-  { id: 'bebas', name: 'Bebas Neue', fontFamily: "'Bebas Neue', cursive", category: 'modern' },
-  { id: 'oswald', name: 'Oswald', fontFamily: "'Oswald', sans-serif", category: 'modern' },
-  { id: 'anton', name: 'Anton', fontFamily: "'Anton', sans-serif", category: 'modern' },
-  { id: 'impact', name: 'Impact', fontFamily: 'Impact, sans-serif', category: 'modern' },
-  { id: 'raleway', name: 'Raleway', fontFamily: "'Raleway', sans-serif", category: 'modern' },
   { id: 'salt', name: 'Salt', fontFamily: "'Salt', sans-serif", category: 'modern' },
   { id: 'theater', name: 'Theater', fontFamily: "'Theater', sans-serif", category: 'modern' },
   { id: 'vaga', name: 'Vaga', fontFamily: "'Vaga', sans-serif", category: 'modern' },
@@ -88,10 +70,6 @@ export const FONT_OPTIONS: FontOption[] = [
   { id: 'hypik', name: 'Hypik', fontFamily: "'Hypik', sans-serif", category: 'modern' },
 
   // Speels - fun, casual fonts
-  { id: 'verdana', name: 'Verdana', fontFamily: 'Verdana, sans-serif', category: 'speels' },
-  { id: 'comicsans', name: 'Comic Sans', fontFamily: "'Comic Sans MS', cursive", category: 'speels' },
-  { id: 'fredoka', name: 'Fredoka One', fontFamily: "'Fredoka One', cursive", category: 'speels' },
-  { id: 'baloo', name: 'Baloo 2', fontFamily: "'Baloo 2', cursive", category: 'speels' },
   { id: 'patang', name: 'Patang', fontFamily: "'Patang', cursive", category: 'speels' },
   { id: 'birthlong', name: 'Birthlong', fontFamily: "'Birthlong', cursive", category: 'speels' },
   { id: 'ltyoyo', name: 'LT Yoyo', fontFamily: "'LT Yoyo', cursive", category: 'speels' },
@@ -103,11 +81,6 @@ export const FONT_OPTIONS: FontOption[] = [
   { id: 'klemissky', name: 'Klemissky', fontFamily: "'Klemissky', cursive", category: 'speels' },
 
   // Handschrift - script, handwritten fonts
-  { id: 'dancing', name: 'Dancing Script', fontFamily: "'Dancing Script', cursive", category: 'handschrift' },
-  { id: 'pacifico', name: 'Pacifico', fontFamily: "'Pacifico', cursive", category: 'handschrift' },
-  { id: 'greatvibes', name: 'Great Vibes', fontFamily: "'Great Vibes', cursive", category: 'handschrift' },
-  { id: 'sacramento', name: 'Sacramento', fontFamily: "'Sacramento', cursive", category: 'handschrift' },
-  { id: 'caveat', name: 'Caveat', fontFamily: "'Caveat', cursive", category: 'handschrift' },
   { id: 'carattere', name: 'Carattere', fontFamily: "'Carattere', cursive", category: 'handschrift' },
   { id: 'ruthie', name: 'Ruthie', fontFamily: "'Ruthie', cursive", category: 'handschrift' },
   { id: 'magnoliascript', name: 'Magnolia Script', fontFamily: "'Magnolia Script', cursive", category: 'handschrift' },

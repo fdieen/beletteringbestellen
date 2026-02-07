@@ -154,6 +154,9 @@ export function TextDesigner() {
                   ))}
                 </SelectContent>
               </Select>
+              <p className="text-xs text-muted-foreground mt-2">
+                Ander lettertype gewenst? <a href="mailto:info@beletteringbestellen.nl" className="text-primary hover:underline">Neem contact op</a> en we helpen je verder.
+              </p>
             </div>
 
             {/* Color Selection */}
