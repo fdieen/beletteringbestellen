@@ -8,6 +8,7 @@ interface PendingOrder {
   orderId: string;
   orderNumber: string;
   email: string;
+  customerName: string;
   items: Array<{
     text: string;
     font: string;
@@ -16,6 +17,15 @@ interface PendingOrder {
     quantity: number;
     price: number;
   }>;
+  subtotal: number;
+  shipping: number;
+  total: number;
+  address: {
+    street: string;
+    houseNumber: string;
+    postalCode: string;
+    city: string;
+  };
 }
 
 const BetalingSucces = () => {
@@ -45,16 +55,19 @@ const BetalingSucces = () => {
         body: {
           to: order.email,
           orderNumber: order.orderNumber,
-          customerName: order.email.split('@')[0], // Fallback name
+          customerName: order.customerName,
           items: order.items,
-          subtotal: order.items.reduce((sum, item) => sum + item.price, 0),
-          shipping: 4.95,
-          total: order.items.reduce((sum, item) => sum + item.price, 0) + 4.95,
+          subtotal: order.subtotal,
+          shipping: order.shipping,
+          total: order.total,
+          address: order.address,
         },
       });
 
       if (!error) {
         setEmailSent(true);
+      } else {
+        console.error('Error sending email:', error);
       }
     } catch (err) {
       console.error('Error sending email:', err);

@@ -130,14 +130,24 @@ export default function Checkout() {
         orderId,
         orderNumber,
         email: formData.email,
+        customerName: `${formData.firstName} ${formData.lastName}`,
         items: items.map(item => ({
           text: item.text,
-          font: item.font?.name,
-          color: item.color?.name,
+          font: item.font?.name || 'Logo',
+          color: item.color?.name || 'Full color',
           height: item.heightCm,
           quantity: item.quantity,
           price: item.priceCalculation?.total || 0,
         })),
+        subtotal: totalPrice,
+        shipping: shippingCost,
+        total: grandTotal,
+        address: {
+          street: formData.street,
+          houseNumber: formData.houseNumber,
+          postalCode: formData.postalCode,
+          city: formData.city,
+        },
       }));
 
       // Map payment method to Mollie method
