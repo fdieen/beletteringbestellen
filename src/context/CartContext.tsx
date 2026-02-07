@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
-import { ColorOption, FontOption, PriceCalculation } from '@/lib/pricing';
+import { ColorOption, FontOption, PriceCalculation, calculatePrice } from '@/lib/pricing';
 
 export interface CartItem {
   id: string;
@@ -51,9 +51,38 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const updateQuantity = useCallback((id: string, quantity: number) => {
-    setItems(prev => prev.map(item => 
-      item.id === id ? { ...item, quantity } : item
-    ));
+    setItems(prev => prev.map(item => {
+      if (item.id !== id) return item;
+
+      // Recalculate price with new quantity
+      if (item.logoImage) {
+        // Logo item - simple price calculation (pricePerUnit * quantity)
+        const pricePerUnit = item.priceCalculation.pricePerUnit;
+        return {
+          ...item,
+          quantity,
+          priceCalculation: {
+            ...item.priceCalculation,
+            quantity,
+            subtotal: pricePerUnit * quantity,
+            total: pricePerUnit * quantity,
+          }
+        };
+      } else {
+        // Text item - full recalculation (includes volume discounts)
+        const newPriceCalculation = calculatePrice(
+          item.priceCalculation.text,
+          item.heightCm,
+          item.color,
+          quantity
+        );
+        return {
+          ...item,
+          quantity,
+          priceCalculation: newPriceCalculation
+        };
+      }
+    }));
   }, []);
 
   const clearCart = useCallback(() => {
