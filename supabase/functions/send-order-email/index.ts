@@ -46,9 +46,8 @@ const generateEmailHtml = (data: OrderEmailRequest): string => {
       <tr>
         <td style="padding: 12px; border-bottom: 1px solid #eee;">
           <strong>${item.text}</strong><br>
-          <span style="color: #666; font-size: 14px;">${item.font} · ${item.color} · ${item.height}cm</span>
+          <span style="color: #666; font-size: 14px;">${item.font} · ${item.color} · ${item.height}cm · ${item.quantity}×</span>
         </td>
-        <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
         <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: right;">${formatPrice(item.price)}</td>
       </tr>
     `
@@ -84,8 +83,7 @@ const generateEmailHtml = (data: OrderEmailRequest): string => {
           <thead>
             <tr style="background: #f8f9fa;">
               <th style="padding: 12px; text-align: left;">Product</th>
-              <th style="padding: 12px; text-align: center;">Aantal</th>
-              <th style="padding: 12px; text-align: right;">Prijs</th>
+              <th style="padding: 12px; text-align: right;">Totaal</th>
             </tr>
           </thead>
           <tbody>
