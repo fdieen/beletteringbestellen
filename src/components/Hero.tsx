@@ -4,34 +4,30 @@ const useCases = [
   {
     title: "Auto's",
     description: "Bedrijfswagens & personenauto's",
-    // Full white van/sprinter side view
-    image: "https://images.unsplash.com/photo-1532581140115-3e355d1ed1de?w=400&h=300&fit=crop&q=80",
-    overlayText: "JANSEN BV",
-    overlayStyle: "text-white font-black text-lg tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]",
+    image: "/assets/mockups/black-car.jpg",
+    overlayText: "RIJSCHOOL",
+    overlayStyle: "text-white font-black text-base tracking-wider drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]",
   },
   {
     title: "Winkels",
     description: "Etalages & panden",
-    // Shop window / storefront glass
-    image: "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?w=400&h=300&fit=crop&q=80",
-    overlayText: "OPEN",
-    overlayStyle: "text-white font-black text-2xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]",
+    image: "/assets/mockups/white-van.jpg",
+    overlayText: "SALE",
+    overlayStyle: "text-white font-black text-2xl tracking-widest drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]",
   },
   {
     title: "Boten",
     description: "Namen & registraties",
-    // Boat hull - good for showing boat name
-    image: "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=400&h=300&fit=crop&q=80",
-    overlayText: "ZEEMEEUW",
-    overlayStyle: "text-white font-bold text-base italic tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]",
+    image: "/assets/mockups/boat.jpg",
+    overlayText: "SEABREEZE",
+    overlayStyle: "text-white font-bold text-base italic tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]",
   },
   {
-    title: "Thuis",
+    title: "Interieur",
     description: "Muren & decoratie",
-    // Clean living room with empty wall - perfect for wall text
-    image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400&h=300&fit=crop&q=80",
-    overlayText: "WELKOM",
-    overlayStyle: "text-gray-700 font-black text-xl tracking-widest",
+    image: "/assets/mockups/storefront.jpg",
+    overlayText: "LOVE",
+    overlayStyle: "text-gray-800 font-black text-2xl tracking-widest drop-shadow-[0_1px_2px_rgba(255,255,255,0.5)]",
   },
 ];
 

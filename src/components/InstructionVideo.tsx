@@ -1,6 +1,13 @@
-import { Clock, CheckCircle } from 'lucide-react';
+import { useState } from 'react';
+import { Clock, CheckCircle, Play } from 'lucide-react';
 
 export function InstructionVideo() {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
+
   return (
     <section id="instructie" className="py-16 md:py-24 bg-muted/30">
       <div className="section-container">
@@ -16,17 +23,29 @@ export function InstructionVideo() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Video Player */}
           <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video">
-              <video
-                controls
-                playsInline
-                preload="metadata"
-                className="absolute inset-0 w-full h-full object-cover"
-                poster=""
-              >
-                <source src="/videos/instructie.mp4" type="video/mp4" />
-                Je browser ondersteunt geen video.
-              </video>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-video bg-gradient-to-br from-primary/20 via-primary/10 to-accent/20">
+              {!isPlaying ? (
+                <button
+                  onClick={handlePlay}
+                  className="absolute inset-0 w-full h-full flex flex-col items-center justify-center gap-4 group cursor-pointer bg-gradient-to-br from-gray-900/80 to-gray-800/80 hover:from-gray-900/70 hover:to-gray-800/70 transition-all"
+                >
+                  <div className="w-20 h-20 rounded-full bg-white/90 group-hover:bg-white group-hover:scale-110 transition-all flex items-center justify-center shadow-2xl">
+                    <Play className="w-8 h-8 text-primary ml-1" fill="currentColor" />
+                  </div>
+                  <span className="text-white font-bold text-lg">Bekijk instructievideo</span>
+                  <span className="text-white/70 text-sm">2 minuten</span>
+                </button>
+              ) : (
+                <video
+                  controls
+                  autoPlay
+                  playsInline
+                  className="absolute inset-0 w-full h-full object-cover"
+                >
+                  <source src="/videos/instructie.mp4" type="video/mp4" />
+                  Je browser ondersteunt geen video.
+                </video>
+              )}
             </div>
           </div>
 
