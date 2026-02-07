@@ -4,7 +4,7 @@ import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/hooks/useAuth';
 import { formatPrice } from '@/lib/pricing';
 import { supabase } from '@/integrations/supabase/client';
-import { ArrowLeft, CreditCard, Building2, Check, ShoppingCart } from 'lucide-react';
+import { ArrowLeft, CreditCard, Building2, Check, ShoppingCart, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,10 +17,9 @@ export default function Checkout() {
   const { items, totalPrice, clearCart } = useCart();
   const { user } = useAuth();
   const { toast } = useToast();
-  const [step, setStep] = useState<'details' | 'payment' | 'success'>('details');
+  const [step, setStep] = useState<'details' | 'payment'>('details');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('ideal');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [orderNumber, setOrderNumber] = useState<string>('');
 
   const [formData, setFormData] = useState({
     email: '',
@@ -57,127 +56,134 @@ export default function Checkout() {
     const date = new Date();
     const dateStr = date.toISOString().slice(0, 10).replace(/-/g, '');
     const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-    return `BO-${dateStr}-${random}`;
+    return `BB-${dateStr}-${random}`;
   };
 
-  const saveOrderToDatabase = async () => {
-    const newOrderNumber = generateOrderNumber();
-
-    // Save each item as a separate order (matching existing DB structure)
-    const orderPromises = items.map(async (item) => {
-      const { error } = await supabase
-        .from('orders')
-        .insert({
-          user_id: user?.id || null,
-          product_name: `Belettering ${item.text}`,
-          width_cm: item.priceCalculation?.widthCm || 0,
+  const saveOrderToDatabase = async (orderNumber: string) => {
+    // Save the order with pending status
+    const orderData = {
+      user_id: user?.id || null,
+      product_name: items.map(i => i.text).join(', '),
+      width_cm: 0,
+      height_cm: items[0]?.heightCm || 0,
+      price: grandTotal,
+      status: 'pending',
+      design_data: {
+        order_number: orderNumber,
+        items: items.map(item => ({
+          text: item.text,
+          font: item.font?.name,
+          font_id: item.font?.id,
+          color: item.color?.hex,
+          color_name: item.color?.name,
           height_cm: item.heightCm,
+          quantity: item.quantity,
           price: item.priceCalculation?.total || 0,
-          design_data: {
-            order_number: newOrderNumber,
-            text: item.text,
-            font: item.font?.name,
-            font_id: item.font?.id,
-            color: item.color?.hex,
-            color_name: item.color?.name,
-            quantity: item.quantity,
-            customer: {
-              email: formData.email,
-              name: `${formData.firstName} ${formData.lastName}`,
-              phone: formData.phone,
-              address: {
-                street: formData.street,
-                houseNumber: formData.houseNumber,
-                postalCode: formData.postalCode,
-                city: formData.city,
-              }
-            },
-            shipping_cost: shippingCost,
-            total: grandTotal,
-            payment_method: paymentMethod,
-          },
-          status: 'paid',
-        });
-
-      if (error) {
-        console.error('Error creating order:', error);
-        throw error;
-      }
-    });
-
-    await Promise.all(orderPromises);
-    return { orderNumber: newOrderNumber };
-  };
-
-  const sendOrderConfirmationEmail = async (orderNumber: string) => {
-    try {
-      const { data, error } = await supabase.functions.invoke('send-order-email', {
-        body: {
-          to: formData.email,
-          orderNumber: orderNumber,
-          customerName: `${formData.firstName} ${formData.lastName}`,
-          items: items.map(item => ({
-            text: item.text,
-            font: item.font?.name || '',
-            color: item.color?.name || '',
-            height: item.heightCm,
-            quantity: item.quantity,
-            price: item.priceCalculation?.total || 0,
-          })),
-          subtotal: totalPrice,
-          shipping: shippingCost,
-          total: grandTotal,
+          logo_image: item.logoImage || null,
+          logo_width: item.logoWidth || null,
+        })),
+        customer: {
+          email: formData.email,
+          name: `${formData.firstName} ${formData.lastName}`,
+          company: formData.company,
+          phone: formData.phone,
           address: {
             street: formData.street,
             houseNumber: formData.houseNumber,
             postalCode: formData.postalCode,
             city: formData.city,
-          },
+          }
         },
-      });
+        subtotal: totalPrice,
+        shipping_cost: shippingCost,
+        total: grandTotal,
+        payment_method: paymentMethod,
+      },
+    };
 
-      if (error) {
-        console.error('Error sending order email:', error);
-      } else {
-        console.log('Order email sent successfully:', data);
-      }
-    } catch (err) {
-      console.error('Error sending email:', err);
+    const { data, error } = await supabase
+      .from('orders')
+      .insert(orderData)
+      .select('id')
+      .single();
+
+    if (error) {
+      console.error('Error creating order:', error);
+      throw error;
     }
+
+    return data.id;
   };
 
   const handlePayment = async () => {
     setIsProcessing(true);
 
     try {
-      // Save order to database
-      const { orderNumber: newOrderNumber } = await saveOrderToDatabase();
-      setOrderNumber(newOrderNumber);
+      // Generate order number
+      const orderNumber = generateOrderNumber();
 
-      // Send confirmation email
-      await sendOrderConfirmationEmail(newOrderNumber);
+      // Save order to database first
+      const orderId = await saveOrderToDatabase(orderNumber);
 
-      // Clear cart and show success
-      clearCart();
-      setStep('success');
+      // Store order info in localStorage for the success page
+      localStorage.setItem('pendingOrder', JSON.stringify({
+        orderId,
+        orderNumber,
+        email: formData.email,
+        items: items.map(item => ({
+          text: item.text,
+          font: item.font?.name,
+          color: item.color?.name,
+          height: item.heightCm,
+          quantity: item.quantity,
+          price: item.priceCalculation?.total || 0,
+        })),
+      }));
 
-      toast({
-        title: 'Bestelling geplaatst!',
-        description: `Je bestelling ${newOrderNumber} is ontvangen.`,
+      // Map payment method to Mollie method
+      const mollieMethod = paymentMethod === 'creditcard' ? 'creditcard' : paymentMethod;
+
+      // Get the base URL for redirects
+      const baseUrl = window.location.origin;
+
+      // Create Mollie payment
+      const { data, error } = await supabase.functions.invoke('create-mollie-payment', {
+        body: {
+          amount: grandTotal,
+          description: `Bestelling ${orderNumber} - BeletteringBestellen.nl`,
+          redirectUrl: `${baseUrl}/betaling-succes?order=${orderNumber}`,
+          webhookUrl: `https://ezpdvawqpymxlupblypw.supabase.co/functions/v1/mollie-webhook`,
+          metadata: {
+            order_id: orderId,
+            order_number: orderNumber,
+            customer_email: formData.email,
+          },
+          method: mollieMethod,
+        },
       });
+
+      if (error || !data?.success) {
+        throw new Error(data?.error || error?.message || 'Betaling aanmaken mislukt');
+      }
+
+      // Clear cart before redirect
+      clearCart();
+
+      // Redirect to Mollie checkout
+      window.location.href = data.checkoutUrl;
+
     } catch (error) {
       console.error('Payment error:', error);
       toast({
         variant: 'destructive',
         title: 'Er ging iets mis',
-        description: 'Probeer het opnieuw of neem contact met ons op.',
+        description: error instanceof Error ? error.message : 'Probeer het opnieuw of neem contact met ons op.',
       });
-    } finally {
       setIsProcessing(false);
     }
   };
 
-  if (items.length === 0 && step !== 'success') {
+  if (items.length === 0) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="text-center">
@@ -187,47 +193,6 @@ export default function Checkout() {
           <Button onClick={() => navigate('/')}>
             Terug naar de shop
           </Button>
-        </div>
-      </div>
-    );
-  }
-
-  if (step === 'success') {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <div className="max-w-md w-full text-center">
-          <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Check className="w-10 h-10 text-success" />
-          </div>
-          <h1 className="text-3xl font-bold text-foreground mb-4">Bedankt voor je bestelling!</h1>
-          {orderNumber && (
-            <p className="text-lg font-medium text-primary mb-4">
-              Bestelnummer: {orderNumber}
-            </p>
-          )}
-          <p className="text-muted-foreground mb-2">
-            Je ontvangt een bevestiging per e-mail op:
-          </p>
-          <p className="font-medium text-foreground mb-6">{formData.email}</p>
-          <div className="bg-muted rounded-xl p-6 mb-6 text-left">
-            <h3 className="font-medium text-foreground mb-3">Verzendadres</h3>
-            <p className="text-muted-foreground">
-              {formData.firstName} {formData.lastName}<br />
-              {formData.company && <>{formData.company}<br /></>}
-              {formData.street} {formData.houseNumber}<br />
-              {formData.postalCode} {formData.city}
-            </p>
-          </div>
-          <div className="space-y-3">
-            {user && (
-              <Button onClick={() => navigate('/mijn-account')} variant="outline" className="w-full">
-                Bekijk mijn bestellingen
-              </Button>
-            )}
-            <Button onClick={() => navigate('/')} className="w-full">
-              Terug naar de shop
-            </Button>
-          </div>
         </div>
       </div>
     );
@@ -453,12 +418,19 @@ export default function Checkout() {
                   </button>
                 </div>
 
+                <div className="bg-muted/50 rounded-lg p-4">
+                  <p className="text-sm text-muted-foreground">
+                    Je wordt doorgestuurd naar een beveiligde betaalpagina van Mollie.
+                  </p>
+                </div>
+
                 <div className="flex gap-4">
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setStep('details')}
                     className="flex-1"
+                    disabled={isProcessing}
                   >
                     Terug
                   </Button>
@@ -467,7 +439,14 @@ export default function Checkout() {
                     disabled={isProcessing}
                     className="flex-1 btn-hero"
                   >
-                    {isProcessing ? 'Verwerken...' : `Betaal ${formatPrice(grandTotal)}`}
+                    {isProcessing ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Verwerken...
+                      </>
+                    ) : (
+                      `Betaal ${formatPrice(grandTotal)}`
+                    )}
                   </Button>
                 </div>
               </div>
@@ -483,21 +462,25 @@ export default function Checkout() {
                 {items.map((item) => (
                   <div key={item.id} className="flex gap-3">
                     <div className="w-16 h-16 bg-muted rounded-lg flex items-center justify-center overflow-hidden">
-                      <span
-                        className="text-xs font-medium break-words text-center p-1"
-                        style={{
-                          fontFamily: item.font.fontFamily,
-                          color: item.color.hex,
-                          textShadow: item.color.id === 'white' ? '0 1px 2px rgba(0,0,0,0.3)' : 'none',
-                        }}
-                      >
-                        {item.text.substring(0, 10)}
-                      </span>
+                      {item.logoImage ? (
+                        <img src={item.logoImage} alt="Logo" className="max-w-full max-h-full object-contain" />
+                      ) : (
+                        <span
+                          className="text-xs font-medium break-words text-center p-1"
+                          style={{
+                            fontFamily: item.font.fontFamily,
+                            color: item.color.hex,
+                            textShadow: item.color.id === 'white' ? '0 1px 2px rgba(0,0,0,0.3)' : 'none',
+                          }}
+                        >
+                          {item.text.substring(0, 10)}
+                        </span>
+                      )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-foreground truncate">{item.text}</p>
                       <p className="text-sm text-muted-foreground">
-                        {item.font.name} · {item.heightCm}cm × {item.quantity}
+                        {item.logoImage ? 'Logo' : item.font.name} · {item.heightCm}cm × {item.quantity}
                       </p>
                     </div>
                     <span className="font-medium">{formatPrice(item.priceCalculation.total)}</span>
