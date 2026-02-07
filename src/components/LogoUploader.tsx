@@ -241,7 +241,7 @@ export function LogoUploader() {
                     <div>
                       <p className="font-medium text-foreground">Full Color Print</p>
                       <p className="text-sm text-muted-foreground">
-                        Je logo wordt geprint in de originele kleuren
+                        Je logo wordt geprint in de originele kleuren en contour gesneden langs de vorm van je logo.
                       </p>
                     </div>
                   </div>
@@ -391,7 +391,7 @@ export function LogoUploader() {
                 <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-muted-foreground">
                   <span className="flex items-center gap-1">
                     <Check className="w-4 h-4 text-success" />
-                    Transparante achtergrond
+                    Contour gesneden
                   </span>
                   <span className="flex items-center gap-1">
                     <Check className="w-4 h-4 text-success" />
