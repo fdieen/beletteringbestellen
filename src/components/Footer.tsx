@@ -65,23 +65,6 @@ export function Footer() {
           <p className="text-sm text-background/40 font-medium">
             © {new Date().getFullYear()} BeletteringBestellen.nl. Alle rechten voorbehouden.
           </p>
-          <div className="flex items-center gap-4 opacity-60 hover:opacity-100 transition-opacity">
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Ideal_Logo.png" 
-              alt="iDEAL" 
-              className="h-4"
-            />
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" 
-              alt="Visa" 
-              className="h-3"
-            />
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" 
-              alt="Mastercard" 
-              className="h-4"
-            />
-          </div>
         </div>
       </div>
     </footer>
