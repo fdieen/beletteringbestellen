@@ -28,7 +28,7 @@ export function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img
-              src="/assets/9374cc51-15a1-4bca-8f3e-50b57c58e982-removebg-preview.png"
+              src="/assets/logo-beletteringbestellen.png"
               alt="Belettering Bestellen"
               className="h-40 w-auto"
             />
