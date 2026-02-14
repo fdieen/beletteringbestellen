@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Check } from 'lucide-react';
+import { Mail, Phone, Send, Check } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
@@ -76,19 +76,6 @@ const Contact = () => {
                         06 14 14 53 50
                       </a>
                       <p className="text-sm text-muted-foreground">Ma-Vr: 9:00 - 17:00</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
-                      <MapPin className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">Adres</p>
-                      <p className="text-muted-foreground">
-                        Voorbeeldstraat 123<br />
-                        1234 AB Amsterdam
-                      </p>
                     </div>
                   </div>
                 </div>
