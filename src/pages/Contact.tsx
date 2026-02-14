@@ -15,22 +15,46 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    const subject = encodeURIComponent(formData.subject || 'Contactformulier beletteringbestellen.nl');
-    const body = encodeURIComponent(
-      `Naam: ${formData.name}\nE-mail: ${formData.email}\n\n${formData.message}`
-    );
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: '997d98de-86ca-4b70-8932-433ea8365534',
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject || 'Contactformulier beletteringbestellen.nl',
+          message: formData.message,
+        }),
+      });
 
-    window.location.href = `mailto:info@beletteringbestellen.nl?subject=${subject}&body=${body}`;
-
-    setIsSubmitted(true);
-    toast({
-      title: "E-mail geopend!",
-      description: "Verstuur het bericht via je e-mailprogramma.",
-    });
-    setFormData({ name: '', email: '', subject: '', message: '' });
+      if (response.ok) {
+        setIsSubmitted(true);
+        toast({
+          title: "Bericht verzonden!",
+          description: "We nemen zo snel mogelijk contact met je op.",
+        });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: "Fout",
+          description: "Er ging iets mis. Probeer het opnieuw.",
+        });
+      }
+    } catch {
+      toast({
+        variant: 'destructive',
+        title: "Fout",
+        description: "Er ging iets mis. Probeer het opnieuw.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
