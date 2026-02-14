@@ -33,7 +33,6 @@ export function InstructionVideo() {
                     <Play className="w-8 h-8 text-primary ml-1" fill="currentColor" />
                   </div>
                   <span className="text-white font-bold text-lg">Bekijk instructievideo</span>
-                  <span className="text-white/70 text-sm">2 minuten</span>
                 </button>
               ) : (
                 <video
