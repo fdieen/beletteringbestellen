@@ -19,12 +19,6 @@ export function Footer() {
             <p className="text-background/60 max-w-sm leading-relaxed text-lg font-medium">
               Wij maken design toegankelijk voor iedereen. Hoogwaardige belettering, voor een fractie van de prijs.
             </p>
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-1">
-                {[1,2,3,4,5].map(s => <Star key={s} className="w-4 h-4 text-success fill-current" />)}
-              </div>
-              <span className="text-[10px] font-bold text-background/50 uppercase tracking-widest">4.9/5 Klanttevredenheid</span>
-            </div>
           </div>
           
           {/* Klantenservice */}

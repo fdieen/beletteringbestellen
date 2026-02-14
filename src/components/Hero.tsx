@@ -38,10 +38,6 @@ export function Hero() {
       <div className="trust-bar">
         <div className="section-container flex flex-wrap justify-between items-center gap-4 text-[11px] font-bold uppercase tracking-widest">
           <div className="flex items-center gap-6">
-            <span className="flex items-center gap-1.5 text-primary">
-              <Star className="w-3 h-3 fill-current" />
-              <span className="text-background">4.9/5 Klanttevredenheid</span>
-            </span>
             <span className="hidden sm:flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>100% Plakgarantie</span>
