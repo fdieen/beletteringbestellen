@@ -17,18 +17,20 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      toast({
-        title: "Bericht verzonden!",
-        description: "We nemen zo snel mogelijk contact met je op.",
-      });
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1000);
+
+    const subject = encodeURIComponent(formData.subject || 'Contactformulier beletteringbestellen.nl');
+    const body = encodeURIComponent(
+      `Naam: ${formData.name}\nE-mail: ${formData.email}\n\n${formData.message}`
+    );
+
+    window.location.href = `mailto:info@beletteringbestellen.nl?subject=${subject}&body=${body}`;
+
+    setIsSubmitted(true);
+    toast({
+      title: "E-mail geopend!",
+      description: "Verstuur het bericht via je e-mailprogramma.",
+    });
+    setFormData({ name: '', email: '', subject: '', message: '' });
   };
 
   return (
@@ -60,8 +62,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="font-medium text-foreground">E-mail</p>
-                      <a href="mailto:info@bestellen.nl" className="text-muted-foreground hover:text-primary transition-colors">
-                        info@bestellen.nl
+                      <a href="mailto:info@beletteringbestellen.nl" className="text-muted-foreground hover:text-primary transition-colors">
+                        info@beletteringbestellen.nl
                       </a>
                     </div>
                   </div>
