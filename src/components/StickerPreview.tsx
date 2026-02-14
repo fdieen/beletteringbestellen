@@ -3,10 +3,10 @@ import { Ruler, Palette, Image, Car, Store, Ship } from 'lucide-react';
 
 // Mockup backgrounds
 const MOCKUP_PRESETS = [
-  { id: 'white-van', src: '/assets/mockups/white-van.jpg', name: 'Witte bestelbus', icon: '🚐' },
-  { id: 'black-car', src: '/assets/mockups/black-car.jpg', name: 'Zwarte auto', icon: '🚗' },
-  { id: 'storefront', src: '/assets/mockups/storefront.jpg', name: 'Etalage', icon: '🏪' },
-  { id: 'boat', src: '/assets/mockups/boat.jpg', name: 'Boot', icon: '⛵' },
+  { id: 'auto', src: '/assets/mockups/auto-belettering.png', name: 'Auto', icon: '🚗' },
+  { id: 'etalage', src: '/assets/mockups/etalage-belettering.png', name: 'Etalage', icon: '🏪' },
+  { id: 'boot', src: '/assets/mockups/boot-belettering.png', name: 'Boot', icon: '⛵' },
+  { id: 'interieur', src: '/assets/mockups/interieur-belettering.png', name: 'Interieur', icon: '🏢' },
 ];
 
 // Size references with common objects (heights in cm)
