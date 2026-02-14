@@ -29,7 +29,7 @@ export default function Auth() {
   const location = useLocation();
   const { toast } = useToast();
 
-  // Check for password reset token in URL
+  // Check for password reset token in URL or Supabase recovery event
   useEffect(() => {
     const hashParams = new URLSearchParams(location.hash.substring(1));
     const type = hashParams.get('type');
@@ -39,6 +39,17 @@ export default function Auth() {
       setIsLogin(false);
       setIsForgotPassword(false);
     }
+
+    // Listen for Supabase PASSWORD_RECOVERY event
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        setIsResetPassword(true);
+        setIsLogin(false);
+        setIsForgotPassword(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, [location]);
 
   useEffect(() => {
