@@ -94,8 +94,8 @@ export function InstructionVideo() {
               <div className="flex items-start gap-3 bg-success/10 text-success rounded-xl p-4">
                 <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium">Gratis rakel bij elke bestelling</p>
-                  <p className="text-sm opacity-80">Wij leveren een rakel mee zodat je direct aan de slag kunt.</p>
+                  <p className="font-medium">Plakinstructie bij elke bestelling</p>
+                  <p className="text-sm opacity-80">Bij elke bestelling ontvang je een duidelijke stap-voor-stap handleiding.</p>
                 </div>
               </div>
             </div>

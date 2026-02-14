@@ -36,7 +36,7 @@ const benefits = [
   },
   { 
     title: 'Hulp bij Plakken', 
-    desc: 'Nog nooit geplakt? Geen zorgen! Bij elke bestelling krijg je een video-handleiding en gratis rakel.',
+    desc: 'Nog nooit geplakt? Geen zorgen! Bij elke bestelling krijg je een duidelijke plakinstructie meegeleverd.',
     icon: HelpCircle
   }
 ];
