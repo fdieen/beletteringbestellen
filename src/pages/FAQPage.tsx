@@ -30,7 +30,7 @@ const faqs = [
   },
   {
     question: 'Hoeveel kost verzending?',
-    answer: 'Verzending kost €4,95 binnen Nederland. Bij bestellingen boven €25 is verzending gratis! Verzending naar België kost €6,95.',
+    answer: 'Verzending kost €4,95 binnen Nederland. Bij bestellingen boven €50 is verzending gratis! Verzending naar België kost €6,95.',
   },
 ];
 

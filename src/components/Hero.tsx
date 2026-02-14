@@ -45,7 +45,7 @@ export function Hero() {
           </div>
           <div className="flex items-center gap-4">
             <span className="hidden md:block">Vandaag besteld = morgen verzonden</span>
-            <span className="text-primary">Gratis verzending vanaf €25</span>
+            <span className="text-primary">Gratis verzending vanaf €50</span>
           </div>
         </div>
       </div>
