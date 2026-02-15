@@ -25,3 +25,5 @@ dist-ssr
 .env
 .temp
 supabase/.temp
+fotos/
+ACCOUNTS-OVERZICHT.md
