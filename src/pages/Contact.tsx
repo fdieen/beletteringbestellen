@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import { Mail, Phone, Send, Check } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -59,6 +61,11 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Contact | BeletteringBestellen.nl</title>
+        <meta name="description" content="Neem contact op met BeletteringBestellen.nl. Heb je een vraag over plakletters of je bestelling? Wij helpen je graag verder." />
+        <link rel="canonical" href="https://beletteringbestellen.nl/contact" />
+      </Helmet>
       <Header />
       <main className="py-16 md:py-24">
         <div className="section-container">
@@ -211,6 +218,16 @@ const Contact = () => {
                 </form>
               )}
             </div>
+          </div>
+
+          {/* Links */}
+          <div className="mt-12 text-center">
+            <p className="text-muted-foreground">
+              Misschien staat het antwoord al bij onze{' '}
+              <Link to="/faq" className="text-primary hover:underline font-medium">veelgestelde vragen</Link>.
+              Of ga terug naar de{' '}
+              <Link to="/" className="text-primary hover:underline font-medium">homepage</Link> om direct te bestellen.
+            </p>
           </div>
         </div>
       </main>

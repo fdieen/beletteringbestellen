@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import { ChevronDown, ChevronUp, Car, Ship, Building2, Home, Store, Ruler } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -72,6 +74,27 @@ const FAQPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Veelgestelde Vragen over Plakletters | BeletteringBestellen.nl</title>
+        <meta name="description" content="Antwoorden op veelgestelde vragen over plakletters: aanbrengen, ondergronden, levensduur, bestellen en meer. Alles wat je wilt weten over belettering." />
+        <link rel="canonical" href="https://beletteringbestellen.nl/faq" />
+        <script type="application/ld+json">{`
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              ${faqs.map(faq => `{
+                "@type": "Question",
+                "name": ${JSON.stringify(faq.question)},
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": ${JSON.stringify(faq.answer)}
+                }
+              }`).join(',\n              ')}
+            ]
+          }
+        `}</script>
+      </Helmet>
       <Header />
       <main className="py-16 md:py-24">
         <div className="section-container">
@@ -150,6 +173,32 @@ const FAQPage = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* CTA Section */}
+          <div className="mt-16 text-center">
+            <div className="card-elevated max-w-2xl mx-auto p-8">
+              <h2 className="text-2xl font-display font-bold text-foreground mb-3">
+                Vraag niet beantwoord?
+              </h2>
+              <p className="text-muted-foreground mb-6">
+                Neem gerust contact met ons op. Of begin direct met het ontwerpen van je belettering.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center rounded-xl border border-primary text-primary px-6 py-3 font-semibold hover:bg-primary/10 transition-colors"
+                >
+                  Neem contact op
+                </Link>
+                <Link
+                  to="/"
+                  className="inline-flex items-center justify-center rounded-xl bg-primary text-primary-foreground px-6 py-3 font-semibold hover:bg-primary/90 transition-colors"
+                >
+                  Begin met ontwerpen
+                </Link>
+              </div>
             </div>
           </div>
         </div>

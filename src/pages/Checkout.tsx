@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/hooks/useAuth';
@@ -206,6 +207,11 @@ export default function Checkout() {
 
   return (
     <div className="min-h-screen bg-muted/30">
+      <Helmet>
+        <title>Bestellen | BeletteringBestellen.nl</title>
+        <meta name="description" content="Rond je bestelling af. Veilig betalen met iDEAL, Bancontact of creditcard." />
+        <meta name="robots" content="noindex" />
+      </Helmet>
       {/* Header */}
       <header className="bg-background border-b border-border">
         <div className="section-container py-4">

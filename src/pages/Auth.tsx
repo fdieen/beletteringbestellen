@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
@@ -208,6 +209,10 @@ export default function Auth() {
 
   return (
     <div className="min-h-screen flex flex-col bg-muted/30 selection:bg-primary/10 selection:text-primary">
+      <Helmet>
+        <title>Inloggen | BeletteringBestellen.nl</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <Header />
       
       <main className="flex-1 flex items-center justify-center py-12 md:py-20 px-4">

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
@@ -141,6 +142,10 @@ export default function MijnAccount() {
 
   return (
     <div className="min-h-screen flex flex-col bg-muted/30 selection:bg-primary/10 selection:text-primary">
+      <Helmet>
+        <title>Mijn Account | BeletteringBestellen.nl</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <Header />
       
       <main className="flex-1 section-container py-8 md:py-16">
