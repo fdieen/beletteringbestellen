@@ -21,7 +21,7 @@ const Autobelettering = () => {
                   Autobelettering bestellen
                 </h1>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-4">
-                  Geef je auto, bestelbus of bedrijfswagen een professionele uitstraling met zelfklevende plakletters. Bij BeletteringBestellen.nl ontwerp je jouw autobelettering volledig zelf — kies je tekst, lettertype en kleur, en wij produceren het op maat.
+                  Geef je auto, bestelbus of bedrijfswagen een professionele uitstraling met zelfklevende plakletters. Bij BeletteringBestellen.nl ontwerp je jouw autobelettering volledig zelf. Kies je tekst, lettertype en kleur, en wij produceren het op maat.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-4">
                   Onze belettering is gemaakt van hoogwaardige, weerbestendige folie die jarenlang meegaat. Of het nu gaat om je bedrijfsnaam op een bestelwagen of een telefoonnummer op je auto: het resultaat is strak en duurzaam.

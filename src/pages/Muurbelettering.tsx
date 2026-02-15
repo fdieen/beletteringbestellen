@@ -21,7 +21,7 @@ const Muurbelettering = () => {
                   Muurbelettering &amp; interieur
                 </h1>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-4">
-                  Voeg karakter toe aan je interieur met stijlvolle muurbelettering. Perfect voor kantoren, wachtruimtes, restaurants of gewoon thuis. Een inspirerend citaat, je bedrijfsnaam of een speelse tekst — met plakletters creëer je het in een handomdraai.
+                  Voeg karakter toe aan je interieur met stijlvolle muurbelettering. Perfect voor kantoren, wachtruimtes, restaurants of gewoon thuis. Een inspirerend citaat, je bedrijfsnaam of een speelse tekst: met plakletters creëer je het in een handomdraai.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-4">
                   Onze plakletters hechten op vrijwel elke gladde muur en zijn beschikbaar in diverse kleuren en formaten. Zo past je muurbelettering naadloos bij je interieur of huisstijl.

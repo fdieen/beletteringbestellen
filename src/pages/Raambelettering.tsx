@@ -24,7 +24,7 @@ const Raambelettering = () => {
                   Trek de aandacht van voorbijgangers met opvallende raambelettering. Ideaal voor winkels, horecazaken, kantoren en praktijken. Met plakletters op je raam of etalage maak je direct duidelijk wie je bent en wat je doet.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-4">
-                  Kies uit tientallen lettertypes en kleuren om je raambelettering precies bij je huisstijl te laten passen. Onze folie hecht uitstekend op glas en is eenvoudig aan te brengen — ook zonder ervaring.
+                  Kies uit tientallen lettertypes en kleuren om je raambelettering precies bij je huisstijl te laten passen. Onze folie hecht uitstekend op glas en is eenvoudig aan te brengen, ook zonder ervaring.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-8">
                   Geen dure reclamebureau's nodig: ontwerp je raambelettering zelf in onze online tool, zie direct je prijs en ontvang je bestelling binnen enkele werkdagen.
