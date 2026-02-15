@@ -18,6 +18,10 @@ import BetalingMislukt from "./pages/BetalingMislukt";
 import Auth from "./pages/Auth";
 import MijnAccount from "./pages/MijnAccount";
 import NotFound from "./pages/NotFound";
+import Autobelettering from "./pages/Autobelettering";
+import Raambelettering from "./pages/Raambelettering";
+import Bootbelettering from "./pages/Bootbelettering";
+import Muurbelettering from "./pages/Muurbelettering";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +58,10 @@ const App = () => {
               <Route path="/betaling-mislukt" element={<BetalingMislukt />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/mijn-account" element={<MijnAccount />} />
+              <Route path="/autobelettering" element={<Autobelettering />} />
+              <Route path="/raambelettering" element={<Raambelettering />} />
+              <Route path="/bootbelettering" element={<Bootbelettering />} />
+              <Route path="/muur-belettering" element={<Muurbelettering />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

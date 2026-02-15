@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-foreground text-background pt-20 pb-12">
       <div className="section-container">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-16">
           {/* Logo & About */}
           <div className="col-span-1 md:col-span-2 space-y-6">
             <div className="flex items-center gap-3">
@@ -30,6 +30,25 @@ export function Footer() {
               </li>
               <li>
                 <Link to="/contact" className="hover:text-primary transition">Contact opnemen</Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Belettering */}
+          <div className="space-y-6">
+            <h4 className="font-black uppercase text-[10px] tracking-[0.2em] text-background/50">Belettering</h4>
+            <ul className="space-y-4 text-background/60 font-medium">
+              <li>
+                <Link to="/autobelettering" className="hover:text-primary transition">Autobelettering</Link>
+              </li>
+              <li>
+                <Link to="/raambelettering" className="hover:text-primary transition">Raambelettering</Link>
+              </li>
+              <li>
+                <Link to="/bootbelettering" className="hover:text-primary transition">Bootbelettering</Link>
+              </li>
+              <li>
+                <Link to="/muur-belettering" className="hover:text-primary transition">Muurbelettering</Link>
               </li>
             </ul>
           </div>
