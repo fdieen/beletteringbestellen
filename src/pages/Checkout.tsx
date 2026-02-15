@@ -60,45 +60,21 @@ export default function Checkout() {
   };
 
   const saveOrderToDatabase = async (orderNumber: string) => {
-    // Save the order with pending status
     const orderData = {
-      user_id: user?.id || null,
-      product_name: items.map(i => i.text).join(', '),
-      width_cm: 0,
-      height_cm: items[0]?.heightCm || 0,
-      price: grandTotal,
+      order_number: orderNumber,
+      customer_email: formData.email,
+      customer_name: `${formData.firstName} ${formData.lastName}`,
+      customer_phone: formData.phone || null,
+      shipping_street: formData.street,
+      shipping_housenumber: formData.houseNumber,
+      shipping_postal_code: formData.postalCode,
+      shipping_city: formData.city,
+      subtotal_cents: Math.round(totalPrice * 100),
+      shipping_cents: Math.round(shippingCost * 100),
+      total_cents: Math.round(grandTotal * 100),
+      payment_method: paymentMethod,
       status: 'pending',
-      design_data: {
-        order_number: orderNumber,
-        items: items.map(item => ({
-          text: item.text,
-          font: item.font?.name,
-          font_id: item.font?.id,
-          color: item.color?.hex,
-          color_name: item.color?.name,
-          height_cm: item.heightCm,
-          quantity: item.quantity,
-          price: item.priceCalculation?.total || 0,
-          logo_image: item.logoImage || null,
-          logo_width: item.logoWidth || null,
-        })),
-        customer: {
-          email: formData.email,
-          name: `${formData.firstName} ${formData.lastName}`,
-          company: formData.company,
-          phone: formData.phone,
-          address: {
-            street: formData.street,
-            houseNumber: formData.houseNumber,
-            postalCode: formData.postalCode,
-            city: formData.city,
-          }
-        },
-        subtotal: totalPrice,
-        shipping_cost: shippingCost,
-        total: grandTotal,
-        payment_method: paymentMethod,
-      },
+      payment_status: 'pending',
     };
 
     const { data, error } = await supabase
