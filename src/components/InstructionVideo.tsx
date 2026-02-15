@@ -163,11 +163,11 @@ export function InstructionVideo() {
           </h3>
           <div className="grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {resultPhotos.map((photo) => (
-              <div key={photo.src} className="rounded-2xl overflow-hidden shadow-lg">
+              <div key={photo.src} className="rounded-2xl overflow-hidden shadow-lg aspect-[4/3]">
                 <img
                   src={photo.src}
                   alt={photo.alt}
-                  className="w-full h-auto object-cover"
+                  className="w-full h-full object-cover"
                   loading="lazy"
                 />
               </div>
