@@ -169,7 +169,7 @@ serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "BeletteringBestellen <onboarding@resend.dev>",
+        from: "BeletteringBestellen <info@beletteringbestellen.nl>",
         to: [data.to],
         subject: `Orderbevestiging ${data.orderNumber} - BeletteringBestellen`,
         html: emailHtml,
