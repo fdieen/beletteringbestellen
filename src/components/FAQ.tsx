@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     question: 'Kan ik mijn eigen lettertype gebruiken?',
-    answer: 'Op dit moment bieden we een selectie van 6 populaire lettertypes. Heb je een specifiek lettertype nodig? Neem contact met ons op voor de mogelijkheden.',
+    answer: 'Op dit moment bieden we een selectie van meer dan 25 lettertypes in verschillende stijlen: zakelijk, modern, speels en handschrift. Heb je een specifiek lettertype nodig? Neem contact met ons op voor de mogelijkheden.',
   },
   {
     question: 'Zijn de letters weerbestendig?',

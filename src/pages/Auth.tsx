@@ -126,9 +126,7 @@ export default function Auth() {
     setIsLoading(true);
 
     try {
-      console.log('Sending password reset for:', email);
       const { error } = await resetPassword(email);
-      console.log('Reset response error:', error);
       if (error) {
         toast({
           variant: 'destructive',
