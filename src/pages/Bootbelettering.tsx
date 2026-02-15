@@ -21,7 +21,7 @@ const Bootbelettering = () => {
                   Bootbelettering bestellen
                 </h1>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-4">
-                  Geef je boot een persoonlijke touch met zelfklevende plakletters. Of je nu de naam op je sloep wilt, je zeilboot van belettering wilt voorzien of je jacht een stijlvolle finishing touch wilt geven — bij ons ontwerp je het zelf.
+                  Geef je boot een persoonlijke touch met zelfklevende plakletters. Of je nu de naam op je sloep wilt, je zeilboot van belettering wilt voorzien of je jacht wilt afwerken, bij ons ontwerp je het zelf.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed mb-4">
                   Onze bootbelettering is gemaakt van duurzame, waterbestendige folie die bestand is tegen zon, regen en zout water. Zo blijft je belettering er jarenlang strak uitzien, ook op het water.
