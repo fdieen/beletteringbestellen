@@ -1,4 +1,4 @@
-import { Mail, Phone, Star } from 'lucide-react';
+import { Mail, Phone, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export function Footer() {
@@ -67,6 +67,12 @@ export function Footer() {
                 <Phone className="w-4 h-4" />
                 <a href="tel:+31614145350" className="hover:text-primary transition">
                   06 14 14 53 50
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <MessageCircle className="w-4 h-4" />
+                <a href="https://wa.me/31614145350" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition">
+                  WhatsApp
                 </a>
               </div>
             </div>
