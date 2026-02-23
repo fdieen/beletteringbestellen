@@ -15,12 +15,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <url>
-    <loc>https://beletteringbestellen.nl/checkout</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
+<url>
     <loc>https://beletteringbestellen.nl/autobelettering</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

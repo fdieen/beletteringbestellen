@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +7,10 @@ const BetalingMislukt = () => {
   const navigate = useNavigate();
 
   return (
+    <>
+      <Helmet>
+        <meta name="robots" content="noindex" />
+      </Helmet>
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
       <div className="text-center max-w-md">
         <XCircle className="h-16 w-16 text-red-500 mx-auto mb-6" />
@@ -25,6 +30,7 @@ const BetalingMislukt = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
