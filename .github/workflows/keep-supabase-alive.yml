@@ -1,0 +1,17 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    - cron: '0 9 */5 * *'  # Elke 5 dagen om 9:00
+  workflow_dispatch:        # Ook handmatig te starten
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        run: |
+          curl -s "https://ezpdvawqpymxlupblypw.supabase.co/rest/v1/" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6cGR2YXdxcHlteGx1cGJseXB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkzNzExMDEsImV4cCI6MjA4NDk0NzEwMX0.CmaFxZvUT69-SYNCa7XetN8jctsEjF_l7bGqsfiENzc" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV6cGR2YXdxcHlteGx1cGJseXB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkzNzExMDEsImV4cCI6MjA4NDk0NzEwMX0.CmaFxZvUT69-SYNCa7XetN8jctsEjF_l7bGqsfiENzc"
+          echo "Supabase gepingd!"
