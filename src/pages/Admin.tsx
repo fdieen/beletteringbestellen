@@ -65,6 +65,16 @@ export default function Admin() {
         },
       });
       if (error) throw error;
+
+      // Status bijwerken naar 'verzonden' in database
+      await supabase
+        .from('orders')
+        .update({ status: 'verzonden' })
+        .eq('id', selected.id);
+
+      // Lijst bijwerken
+      setOrders(prev => prev.map(o => o.id === selected.id ? { ...o, status: 'verzonden' } : o));
+
       setResult({ success: true, message: `Verzendmail verstuurd naar ${selected.design_data.customer.email}` });
       setSelected(null);
       setTrackingCode('');
@@ -201,8 +211,13 @@ export default function Admin() {
                 <div className="flex justify-between items-start">
                   <div>
                     <span className="font-black text-sm">{dd.order_number}</span>
-                    <span className={`ml-2 text-xs px-2 py-0.5 rounded-full font-semibold ${order.status === 'paid' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                      {order.status === 'paid' ? 'Betaald' : order.status}
+                    <span className={`ml-2 text-xs px-2 py-0.5 rounded-full font-semibold ${
+                      order.status === 'verzonden' ? 'bg-blue-100 text-blue-700' :
+                      order.status === 'paid' ? 'bg-green-100 text-green-700' :
+                      'bg-yellow-100 text-yellow-700'
+                    }`}>
+                      {order.status === 'verzonden' ? 'Verzonden' :
+                       order.status === 'paid' ? 'Betaald' : order.status}
                     </span>
                   </div>
                   <div className="text-right">
