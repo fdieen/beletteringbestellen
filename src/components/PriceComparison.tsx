@@ -93,7 +93,7 @@ export function PriceComparison() {
                   'Direct online ontwerpen',
                   'Prijs direct zichtbaar',
                   'Zelf makkelijk plakken',
-                  'Gratis verzending vanaf €50',
+                  'Gratis verzending vanaf €75',
                 ].map((feature) => (
                   <li key={feature} className="flex items-center gap-3 text-sm">
                     <Check className="w-5 h-5 text-success flex-shrink-0" />

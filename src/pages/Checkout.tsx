@@ -41,7 +41,7 @@ export default function Checkout() {
     }
   }, [user]);
 
-  const shippingCost = totalPrice >= 50 ? 0 : 4.95;
+  const shippingCost = totalPrice >= 75 ? 0 : 4.95;
   const grandTotal = totalPrice + shippingCost;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -511,7 +511,7 @@ export default function Checkout() {
                 </div>
                 {shippingCost > 0 && (
                   <p className="text-xs text-muted-foreground">
-                    Gratis verzending vanaf €50
+                    Gratis verzending vanaf €75
                   </p>
                 )}
               </div>

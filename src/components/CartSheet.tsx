@@ -168,7 +168,7 @@ export function CartSheet() {
                 <span className="font-black text-2xl">{formatPrice(totalPrice)}</span>
               </div>
               <p className="text-[10px] text-muted-foreground text-center uppercase tracking-widest font-bold">
-                {`Incl. 21% BTW · ${totalPrice >= 50 ? 'Gratis verzending' : 'Verzending €4,95'}`}
+                {`Incl. 21% BTW · ${totalPrice >= 75 ? 'Gratis verzending' : 'Verzending €4,95'}`}
               </p>
               
               <Button 
