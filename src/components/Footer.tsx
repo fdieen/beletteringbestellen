@@ -30,6 +30,9 @@ export function Footer() {
                 <Link to="/faq" className="hover:text-primary transition">Hulp bij plakken</Link>
               </li>
               <li>
+                <Link to="/blog" className="hover:text-primary transition">Blog & tips</Link>
+              </li>
+              <li>
                 <Link to="/contact" className="hover:text-primary transition">Contact opnemen</Link>
               </li>
             </ul>

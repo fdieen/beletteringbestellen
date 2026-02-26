@@ -26,6 +26,8 @@ import Muurbelettering from "./pages/Muurbelettering";
 import Admin from "./pages/Admin";
 import AlgemeneVoorwaarden from "./pages/AlgemeneVoorwaarden";
 import Privacybeleid from "./pages/Privacybeleid";
+import Blog from "./pages/Blog";
+import BlogAutobelettering from "./pages/BlogAutobelettering";
 
 const queryClient = new QueryClient();
 
@@ -70,6 +72,8 @@ const App = () => {
               <Route path="/admin" element={<Admin />} />
               <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
               <Route path="/privacybeleid" element={<Privacybeleid />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/hoe-plak-ik-autobelettering" element={<BlogAutobelettering />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

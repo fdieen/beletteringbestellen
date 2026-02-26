@@ -523,6 +523,14 @@ export default function Checkout() {
                 </div>
                 <p className="text-xs text-muted-foreground mt-1">Incl. 21% BTW</p>
               </div>
+
+              {/* Veilig betalen badge */}
+              <div className="flex items-center justify-center gap-2 bg-muted/50 rounded-xl px-4 py-3 mt-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-success shrink-0">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span className="text-xs text-muted-foreground">Veilig betalen via <strong className="text-foreground">iDEAL, Bancontact of creditcard</strong> — beveiligd met SSL</span>
+              </div>
             </div>
           </div>
         </div>
