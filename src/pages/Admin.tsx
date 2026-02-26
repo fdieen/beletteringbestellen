@@ -32,13 +32,13 @@ export default function Admin() {
     try {
       const { data } = await supabase
         .from('orders')
-        .select('metadata')
-        .eq('metadata->>order_number', orderNumber.trim())
+        .select('design_data')
+        .eq('design_data->>order_number', orderNumber.trim())
         .single();
 
-      if (data?.metadata) {
-        const meta = data.metadata as Record<string, unknown>;
-        const customer = meta.customer as Record<string, string> | undefined;
+      if (data?.design_data) {
+        const dd = data.design_data as Record<string, unknown>;
+        const customer = dd.customer as Record<string, string> | undefined;
         if (customer?.email) setCustomerEmail(customer.email);
         if (customer?.name) setCustomerName(customer.name);
       }
