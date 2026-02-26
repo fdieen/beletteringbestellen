@@ -103,38 +103,47 @@ export function Footer() {
 
             {/* Bancontact */}
             <div className="bg-white rounded px-2 py-1 flex items-center h-7">
-              <svg width="38" height="14" viewBox="0 0 120 40" fill="none">
-                <rect width="55" height="40" rx="4" fill="#005498"/>
-                <rect x="55" width="65" height="40" rx="4" fill="#FFD700"/>
-                <text x="27" y="27" textAnchor="middle" fill="white" fontSize="20" fontWeight="900">B</text>
-                <text x="87" y="27" textAnchor="middle" fill="#005498" fontSize="13" fontWeight="700">contact</text>
+              <svg width="54" height="18" viewBox="0 0 54 18" fill="none">
+                {/* Blauwe helft */}
+                <rect width="27" height="18" rx="3" fill="#005498"/>
+                {/* Gele helft */}
+                <rect x="27" width="27" height="18" rx="3" fill="#FFD700"/>
+                {/* Witte B op blauw */}
+                <text x="13" y="13.5" textAnchor="middle" fill="white" fontSize="11" fontWeight="900" fontFamily="Arial Black, Arial">B</text>
+                {/* Blauwe C op geel */}
+                <text x="41" y="13.5" textAnchor="middle" fill="#005498" fontSize="11" fontWeight="900" fontFamily="Arial Black, Arial">C</text>
               </svg>
             </div>
 
             {/* Visa */}
-            <div className="bg-white rounded px-2 py-1 flex items-center h-7">
-              <svg width="38" height="14" viewBox="0 0 120 40" fill="none">
-                <text x="4" y="30" fill="#1A1F71" fontSize="32" fontWeight="900" fontFamily="Arial">VISA</text>
+            <div className="bg-white rounded px-2.5 py-1 flex items-center h-7">
+              <svg width="40" height="14" viewBox="0 0 40 14" fill="none">
+                {/* Klassiek Visa blauw italic */}
+                <text x="0" y="13" fill="#1A1F71" fontSize="14" fontWeight="900" fontFamily="Arial Black, Arial" fontStyle="italic" letterSpacing="-0.5">VISA</text>
               </svg>
             </div>
 
             {/* Mastercard */}
-            <div className="bg-white rounded px-2 py-1 flex items-center gap-1 h-7">
-              <svg width="30" height="18" viewBox="0 0 50 30" fill="none">
-                <circle cx="18" cy="15" r="12" fill="#EB001B"/>
-                <circle cx="32" cy="15" r="12" fill="#F79E1B"/>
-                <path d="M25 6.8a12 12 0 0 1 0 16.4A12 12 0 0 1 25 6.8z" fill="#FF5F00"/>
+            <div className="bg-white rounded px-2.5 py-1 flex items-center gap-1.5 h-7">
+              <svg width="34" height="20" viewBox="0 0 34 20" fill="none">
+                {/* Rode cirkel links */}
+                <circle cx="12" cy="10" r="10" fill="#EB001B"/>
+                {/* Gele cirkel rechts */}
+                <circle cx="22" cy="10" r="10" fill="#F79E1B"/>
+                {/* Overlapping oranje gebied */}
+                <path d="M17 3.27a10 10 0 0 1 0 13.46A10 10 0 0 1 17 3.27z" fill="#FF5F00"/>
               </svg>
             </div>
 
-            {/* Mollie badge */}
-            <div className="bg-white rounded px-2 py-1 flex items-center gap-1 h-7">
-              <svg width="14" height="14" viewBox="0 0 32 32" fill="none">
-                <rect width="32" height="32" rx="6" fill="#FF6640"/>
-                <circle cx="16" cy="16" r="7" fill="white"/>
-                <circle cx="16" cy="16" r="4" fill="#FF6640"/>
+            {/* Mollie */}
+            <div className="bg-white rounded px-2 py-1 flex items-center gap-1.5 h-7">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                {/* Mollie M-vorm: twee bogen */}
+                <circle cx="4" cy="9" r="3.5" fill="none" stroke="#FF6640" strokeWidth="2.5"/>
+                <circle cx="10" cy="9" r="3.5" fill="none" stroke="#FF6640" strokeWidth="2.5"/>
+                <rect x="0.75" y="2" width="2.5" height="10" rx="1.25" fill="#FF6640"/>
               </svg>
-              <span className="text-[11px] font-black text-[#FF6640] tracking-tight">mollie</span>
+              <span className="text-[12px] font-black text-[#FF6640] tracking-tight">mollie</span>
             </div>
           </div>
         </div>
