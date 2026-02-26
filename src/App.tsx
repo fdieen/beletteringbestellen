@@ -22,6 +22,7 @@ import Autobelettering from "./pages/Autobelettering";
 import Raambelettering from "./pages/Raambelettering";
 import Bootbelettering from "./pages/Bootbelettering";
 import Muurbelettering from "./pages/Muurbelettering";
+import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +63,7 @@ const App = () => {
               <Route path="/raambelettering" element={<Raambelettering />} />
               <Route path="/bootbelettering" element={<Bootbelettering />} />
               <Route path="/muur-belettering" element={<Muurbelettering />} />
+              <Route path="/admin" element={<Admin />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
