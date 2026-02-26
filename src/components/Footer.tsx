@@ -90,14 +90,15 @@ export function Footer() {
             <span className="text-xs text-background/30 font-medium mr-1">Betalen via</span>
 
             {/* iDEAL */}
-            <div className="bg-white rounded px-2 py-1 flex items-center gap-1.5 h-7">
-              <svg width="14" height="14" viewBox="0 0 100 100" fill="none">
-                <rect width="100" height="100" rx="8" fill="#CC0066"/>
-                <path d="M20 20h30c22 0 36 14 36 30s-14 30-36 30H20V20z" fill="white"/>
-                <path d="M28 28h22c16 0 26 10 26 22s-10 22-26 22H28V28z" fill="#CC0066"/>
-                <circle cx="68" cy="35" r="6" fill="#CC0066"/>
+            <div className="bg-white rounded px-2.5 py-1 flex items-center h-7">
+              <svg width="48" height="18" viewBox="0 0 48 18" fill="none">
+                {/* i - stem */}
+                <rect x="1.5" y="8" width="3" height="9" rx="1.5" fill="#CC0066"/>
+                {/* i - hart boven de stam */}
+                <path d="M3 7C3 7 0.5 5 0.8 3C1.1 1.2 2.5 0.5 3 1.5C3.5 0.5 4.9 1.2 5.2 3C5.5 5 3 7 3 7Z" fill="#CC0066"/>
+                {/* DEAL */}
+                <text x="9" y="16" fontFamily="Arial Black, Arial, sans-serif" fontSize="13" fontWeight="900" fill="#CC0066" letterSpacing="0.3">DEAL</text>
               </svg>
-              <span className="text-[11px] font-black text-[#CC0066] tracking-tight">iDEAL</span>
             </div>
 
             {/* Bancontact */}
