@@ -23,6 +23,8 @@ import Raambelettering from "./pages/Raambelettering";
 import Bootbelettering from "./pages/Bootbelettering";
 import Muurbelettering from "./pages/Muurbelettering";
 import Admin from "./pages/Admin";
+import AlgemeneVoorwaarden from "./pages/AlgemeneVoorwaarden";
+import Privacybeleid from "./pages/Privacybeleid";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +66,8 @@ const App = () => {
               <Route path="/bootbelettering" element={<Bootbelettering />} />
               <Route path="/muur-belettering" element={<Muurbelettering />} />
               <Route path="/admin" element={<Admin />} />
+              <Route path="/algemene-voorwaarden" element={<AlgemeneVoorwaarden />} />
+              <Route path="/privacybeleid" element={<Privacybeleid />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

@@ -1,5 +1,6 @@
 import { Mail, Phone, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { CookieBanner } from './CookieBanner';
 
 export function Footer() {
   return (
@@ -80,12 +81,17 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-background/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-sm text-background/40 font-medium">
-            © {new Date().getFullYear()} BeletteringBestellen.nl. Alle rechten voorbehouden.
-          </p>
-
+        <div className="border-t border-background/10 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="text-sm text-background/40 font-medium space-y-1 text-center md:text-left">
+            <p>© {new Date().getFullYear()} BeletteringBestellen.nl — RHTTOURS B.V.</p>
+            <p>KvK: 95053115 · BTW: NL866981755B01</p>
+          </div>
+          <div className="flex gap-4 text-sm text-background/40">
+            <Link to="/algemene-voorwaarden" className="hover:text-background/70 transition">Algemene voorwaarden</Link>
+            <Link to="/privacybeleid" className="hover:text-background/70 transition">Privacybeleid</Link>
+          </div>
         </div>
+        <CookieBanner />
       </div>
     </footer>
   );
