@@ -161,7 +161,7 @@ serve(async (req) => {
 
     const emailHtml = generateEmailHtml(data);
 
-    // Send email via Resend
+    // Send confirmation email to customer
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -188,6 +188,27 @@ serve(async (req) => {
         }
       );
     }
+
+    // Send notification email to shop owner
+    await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: "BeletteringBestellen <info@beletteringbestellen.nl>",
+        to: ["info@beletteringbestellen.nl"],
+        subject: `🛒 Nieuwe bestelling ${data.orderNumber} - €${data.total.toFixed(2)}`,
+        html: `<h2>Nieuwe bestelling ontvangen!</h2>
+          <p><strong>Bestelnummer:</strong> ${data.orderNumber}</p>
+          <p><strong>Klant:</strong> ${data.customerName} (${data.to})</p>
+          <p><strong>Totaal:</strong> €${data.total.toFixed(2)}</p>
+          <p><strong>Adres:</strong> ${data.address.street} ${data.address.houseNumber}, ${data.address.postalCode} ${data.address.city}</p>
+          <hr>
+          ${data.items.map((item: OrderItem) => `<p>${item.quantity}× ${item.text} — €${item.price.toFixed(2)}</p>`).join('')}`,
+      }),
+    });
 
     return new Response(
       JSON.stringify({ success: true, messageId: resData.id }),
