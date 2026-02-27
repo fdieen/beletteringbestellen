@@ -200,13 +200,56 @@ serve(async (req) => {
         from: "BeletteringBestellen <info@beletteringbestellen.nl>",
         to: ["info@beletteringbestellen.nl"],
         subject: `🛒 Nieuwe bestelling ${data.orderNumber} - €${data.total.toFixed(2)}`,
-        html: `<h2>Nieuwe bestelling ontvangen!</h2>
-          <p><strong>Bestelnummer:</strong> ${data.orderNumber}</p>
-          <p><strong>Klant:</strong> ${data.customerName} (${data.to})</p>
-          <p><strong>Totaal:</strong> €${data.total.toFixed(2)}</p>
-          <p><strong>Adres:</strong> ${data.address.street} ${data.address.houseNumber}, ${data.address.postalCode} ${data.address.city}</p>
-          <hr>
-          ${data.items.map((item: OrderItem) => `<p>${item.quantity}× ${item.text} — €${item.price.toFixed(2)}</p>`).join('')}`,
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <div style="background: #3d8c26; padding: 20px; border-radius: 8px 8px 0 0;">
+              <h2 style="color: white; margin: 0; font-size: 20px;">Nieuwe bestelling ontvangen!</h2>
+            </div>
+            <div style="border: 1px solid #ddd; border-top: none; padding: 24px; border-radius: 0 0 8px 8px;">
+
+              <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                <tr><td style="padding: 6px 0; color: #666; width: 140px;">Bestelnummer</td><td style="padding: 6px 0; font-weight: bold;">${data.orderNumber}</td></tr>
+                <tr><td style="padding: 6px 0; color: #666;">Klant</td><td style="padding: 6px 0;">${data.customerName}</td></tr>
+                <tr><td style="padding: 6px 0; color: #666;">E-mail</td><td style="padding: 6px 0;"><a href="mailto:${data.to}">${data.to}</a></td></tr>
+                <tr><td style="padding: 6px 0; color: #666;">Verzendadres</td><td style="padding: 6px 0;">${data.address.street} ${data.address.houseNumber}, ${data.address.postalCode} ${data.address.city}</td></tr>
+                <tr><td style="padding: 6px 0; color: #666;">Totaal</td><td style="padding: 6px 0; font-weight: bold; font-size: 18px;">€${data.total.toFixed(2)}</td></tr>
+              </table>
+
+              <h3 style="border-bottom: 2px solid #eee; padding-bottom: 8px; margin-bottom: 12px;">Te maken — productiedetails</h3>
+
+              ${data.items.map((item: OrderItem, i: number) => `
+                <div style="background: #f9f9f9; border-left: 4px solid #3d8c26; padding: 14px 16px; margin-bottom: 12px; border-radius: 0 6px 6px 0;">
+                  <div style="font-size: 16px; font-weight: bold; margin-bottom: 8px;">${i + 1}. &ldquo;${item.text}&rdquo;</div>
+                  <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                    <tr>
+                      <td style="padding: 3px 12px 3px 0; color: #666;">Lettertype</td>
+                      <td style="padding: 3px 0; font-weight: bold;">${item.font}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 3px 12px 3px 0; color: #666;">Kleur</td>
+                      <td style="padding: 3px 0;">
+                        <span style="display: inline-block; width: 14px; height: 14px; background: ${item.color}; border: 1px solid #ccc; border-radius: 3px; vertical-align: middle; margin-right: 6px;"></span>
+                        <strong>${item.color}</strong>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 3px 12px 3px 0; color: #666;">Hoogte</td>
+                      <td style="padding: 3px 0; font-weight: bold;">${item.height} cm</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 3px 12px 3px 0; color: #666;">Aantal</td>
+                      <td style="padding: 3px 0; font-weight: bold;">${item.quantity}×</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 3px 12px 3px 0; color: #666;">Prijs</td>
+                      <td style="padding: 3px 0;">€${item.price.toFixed(2)}</td>
+                    </tr>
+                  </table>
+                </div>
+              `).join('')}
+
+            </div>
+          </div>`,
       }),
     });
 
