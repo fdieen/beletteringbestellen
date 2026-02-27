@@ -31,10 +31,7 @@ const Index = () => {
           }
         `}</script>
       </Helmet>
-      <div className="bg-primary text-primary-foreground text-center text-sm py-2 px-4">
-        Binnenkort volledig online — wil je nu al bestellen? Bel <a href="tel:0614145350" className="font-semibold underline">0614145350</a> of mail <a href="mailto:info@beletteringbestellen.nl" className="font-semibold underline">info@beletteringbestellen.nl</a>
-      </div>
-      <Header />
+<Header />
       <main>
         <Hero />
         <TextDesigner />
