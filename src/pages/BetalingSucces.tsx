@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CheckCircle, Package, Mail } from "lucide-react";
+import { CheckCircle, Package, Mail, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -33,20 +33,51 @@ const BetalingSucces = () => {
   const [searchParams] = useSearchParams();
   const [orderData, setOrderData] = useState<PendingOrder | null>(null);
   const [emailSent, setEmailSent] = useState(false);
+  const [verifying, setVerifying] = useState(true);
 
   useEffect(() => {
-    // Get order data from localStorage
     const pendingOrderStr = localStorage.getItem('pendingOrder');
-    if (pendingOrderStr) {
-      const pendingOrder: PendingOrder = JSON.parse(pendingOrderStr);
-      setOrderData(pendingOrder);
-
-      // Send confirmation email
-      sendConfirmationEmail(pendingOrder);
-
-      // Clear localStorage after retrieving
-      localStorage.removeItem('pendingOrder');
+    if (!pendingOrderStr) {
+      setVerifying(false);
+      return;
     }
+
+    const pendingOrder: PendingOrder = JSON.parse(pendingOrderStr);
+    setOrderData(pendingOrder);
+
+    // Poll Supabase until webhook updates the status (max ~15 sec)
+    let attempts = 0;
+    const maxAttempts = 10;
+
+    const checkStatus = async () => {
+      attempts++;
+
+      const { data } = await supabase
+        .from('orders')
+        .select('status')
+        .eq('id', pendingOrder.orderId)
+        .single();
+
+      const status = data?.status;
+
+      if (status === 'paid') {
+        localStorage.removeItem('pendingOrder');
+        setVerifying(false);
+        sendConfirmationEmail(pendingOrder);
+      } else if (status === 'payment_failed' || status === 'cancelled') {
+        localStorage.removeItem('pendingOrder');
+        navigate('/betaling-mislukt');
+      } else if (attempts < maxAttempts) {
+        // Status nog pending, probeer opnieuw
+        setTimeout(checkStatus, 1500);
+      } else {
+        // Na 15 sec nog steeds niet bevestigd — toon succes als fallback
+        localStorage.removeItem('pendingOrder');
+        setVerifying(false);
+      }
+    };
+
+    checkStatus();
   }, []);
 
   const sendConfirmationEmail = async (order: PendingOrder) => {
@@ -75,6 +106,17 @@ const BetalingSucces = () => {
   };
 
   const orderNumber = searchParams.get('order') || orderData?.orderNumber;
+
+  if (verifying) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background px-4">
+        <div className="text-center">
+          <Loader2 className="h-10 w-10 text-primary animate-spin mx-auto mb-4" />
+          <p className="text-muted-foreground">Betaling verifiëren...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4">
