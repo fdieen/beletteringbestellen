@@ -59,7 +59,7 @@ export function Header() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button 
-                    className="flex items-center gap-2 bg-foreground text-background hover:bg-foreground/90 font-black text-[10px] uppercase tracking-widest px-6 py-3 rounded-xl shadow-lg"
+                    className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 font-black text-[10px] uppercase tracking-widest px-6 py-3 rounded-xl shadow-lg"
                   >
                     <User className="w-4 h-4" />
                     <span className="hidden md:inline">Account</span>
@@ -79,7 +79,7 @@ export function Header() {
             ) : (
               <Button 
                 onClick={() => navigate('/auth')}
-                className="flex items-center gap-2 bg-foreground text-background hover:bg-foreground/90 font-black text-[10px] uppercase tracking-widest px-6 py-3 rounded-xl shadow-lg"
+                className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90 font-black text-[10px] uppercase tracking-widest px-6 py-3 rounded-xl shadow-lg"
               >
                 <User className="w-4 h-4" />
                 <span className="hidden md:inline">Account</span>

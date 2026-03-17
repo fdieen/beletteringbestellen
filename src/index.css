@@ -160,7 +160,7 @@
   }
   
   .trust-bar {
-    @apply bg-foreground text-background py-2.5;
+    @apply bg-primary text-primary-foreground py-2.5;
   }
   
   .glass-effect {
