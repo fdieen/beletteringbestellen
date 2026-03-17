@@ -1,4 +1,4 @@
-import { PenLine, CreditCard, Package, ThumbsUp, Zap, Truck, HelpCircle } from 'lucide-react';
+import { PenLine, CreditCard, Package, ThumbsUp, Zap, Truck, HelpCircle, Wrench } from 'lucide-react';
 
 const steps = [
   {
@@ -115,6 +115,41 @@ export function HowItWorks() {
                 <p className="text-muted-foreground leading-relaxed text-sm">{benefit.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Wij plakken het ook Section */}
+      <section className="py-16 md:py-20 bg-background">
+        <div className="section-container">
+          <div className="rounded-3xl bg-primary/5 border border-primary/15 p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+            <div className="flex-shrink-0 w-20 h-20 bg-primary/10 rounded-3xl flex items-center justify-center">
+              <Wrench className="w-10 h-10 text-primary" />
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <h2 className="text-2xl md:text-3xl font-black text-foreground mb-3">
+                Liever dat wij het plakken?
+              </h2>
+              <p className="text-muted-foreground leading-relaxed">
+                Geen zin om zelf te plakken of gewoon zeker willen zijn van een perfect resultaat? Wij komen het ook voor je aanbrengen. Neem even contact op en we kijken samen wat mogelijk is.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row md:flex-col gap-3 flex-shrink-0">
+              <a
+                href="https://wa.me/31614145350"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground font-bold px-6 py-3 rounded-xl hover:bg-primary/90 transition-colors"
+              >
+                WhatsApp ons
+              </a>
+              <a
+                href="mailto:info@beletteringbestellen.nl"
+                className="inline-flex items-center justify-center gap-2 border border-primary/20 text-primary font-bold px-6 py-3 rounded-xl hover:bg-primary/5 transition-colors"
+              >
+                Stuur een mail
+              </a>
+            </div>
           </div>
         </div>
       </section>
